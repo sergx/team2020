@@ -1,0 +1,13 @@
+{
+  "name": "MaterialRezerv",
+  "alias": "materialrezerv",
+  "description": "",
+  "keywords": [],
+  "order": 0,
+  "providers": [
+    "Modules\\MaterialRezerv\\Providers\\MaterialRezervServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

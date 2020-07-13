@@ -1,0 +1,13 @@
+{
+  "name": "MaterialSklad",
+  "alias": "materialsklad",
+  "description": "",
+  "keywords": [],
+  "order": 0,
+  "providers": [
+    "Modules\\MaterialSklad\\Providers\\MaterialSkladServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

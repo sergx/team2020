@@ -1,0 +1,25 @@
+{
+  "name": "nwidart/materialsklad",
+  "description": "",
+  "authors": [
+    {
+      "name": "Nicolas Widart",
+      "email": "n.widart@gmail.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Modules\\MaterialSklad\\Providers\\MaterialSkladServiceProvider"
+      ],
+      "aliases": {
+
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\MaterialSklad\\": ""
+    }
+  }
+}

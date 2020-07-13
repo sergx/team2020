@@ -1,0 +1,25 @@
+{
+  "name": "nwidart/materialrezerv",
+  "description": "",
+  "authors": [
+    {
+      "name": "Nicolas Widart",
+      "email": "n.widart@gmail.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Modules\\MaterialRezerv\\Providers\\MaterialRezervServiceProvider"
+      ],
+      "aliases": {
+
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\MaterialRezerv\\": ""
+    }
+  }
+}

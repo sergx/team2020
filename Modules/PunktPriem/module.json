@@ -1,0 +1,13 @@
+{
+  "name": "PunktPriem",
+  "alias": "punktpriem",
+  "description": "",
+  "keywords": [],
+  "order": 0,
+  "providers": [
+    "Modules\\PunktPriem\\Providers\\PunktPriemServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

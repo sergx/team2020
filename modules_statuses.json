@@ -1,0 +1,12 @@
+{
+    "Buyer": true,
+    "Users": true,
+    "User": true,
+    "Test": true,
+    "MaterialSklad": true,
+    "MaterialRezerv": true,
+    "PunktPriem": true,
+    "Deal": true,
+    "UserRoles": true,
+    "UserRole": true
+}
