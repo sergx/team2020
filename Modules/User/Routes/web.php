@@ -16,10 +16,11 @@ Route::prefix('user')->group(function() {
   $controllerName = 'UserController';
 
   Route::get(   '/',          $controllerName.'@index')   ->name($prefix.'.index');
-  Route::get(   '/create',       $controllerName.'@create')   ->name($prefix.'.create');
-  Route::post(  '/',          $controllerName.'@store')   ->name($prefix.'.store');
+  Route::get(   '/role_update',          $controllerName.'@roleUpdate')   ->name($prefix.'.role_update');
+  //Route::get(   '/create',       $controllerName.'@create')   ->name($prefix.'.create');
+  //Route::post(  '/',          $controllerName.'@store')   ->name($prefix.'.store');
   Route::get(   '/{id}',        $controllerName.'@show')    ->name($prefix.'.show');
-  Route::get(   '/{id}/edit',      $controllerName.'@edit')    ->name($prefix.'.edit');
-  Route::put(   '/{id}',        $controllerName.'@update')   ->name($prefix.'.update');
-  Route::delete( '/{id}',        $controllerName.'@destroy')  ->name($prefix.'.destroy');
+  //Route::get(   '/{id}/edit',      $controllerName.'@edit')    ->name($prefix.'.edit');
+  //Route::put(   '/{id}',        $controllerName.'@update')   ->name($prefix.'.update');
+  //Route::delete( '/{id}',        $controllerName.'@destroy')  ->name($prefix.'.destroy');
 });

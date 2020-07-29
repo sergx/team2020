@@ -49,6 +49,9 @@ class MaterialSkladController extends Controller
     $item = new MaterialSklad;
     $item->name = $request->input('name');
     $item->description = $request->input('description');
+    $item->place = $request->input('place');
+    $item->volume = $request->input('volume');
+    $item->contacts = $request->input('contacts');
     $item->user_id = auth()->user()->id;
     $item->save();
 
@@ -97,6 +100,9 @@ class MaterialSkladController extends Controller
 
     $item->name = $request->input('name');
     $item->description = $request->input('description');
+    $item->place = $request->input('place');
+    $item->volume = $request->input('volume');
+    $item->contacts = $request->input('contacts');
     $item->save();
 
     return redirect('materialsklad/')->with('success', __('common.materialsklad_updated'));

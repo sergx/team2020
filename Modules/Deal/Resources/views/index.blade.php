@@ -1,9 +1,21 @@
-@extends('deal::layouts.master')
-
+@extends('layouts.app')
 @section('content')
-  <h1>Hello World</h1>
+ <div class="container">
+  @include('inc.breadcrumbs')
+  <h1>{{__("common.".$template_data['module']."_title")}}</h1>
+  @if(count($items) > 0)
+  <ul>
+    @foreach ($items as $item)
+      @if (!empty($item->name))
+        <li><a href="{{route($template_data['module'].'.show', $item->id)}}">{{$item->name}}</a>, {!!$item->description!!}</li>
+      @else
+        <li><a href="{{route($template_data['module'].'.show', $item->id)}}">{{$item->material_name}}: {{$item->seller_name}} -> {{$item->buyer_name}}</a></li>
+      @endif
+    @endforeach
+  </ul>
+  @endif
 
-  <p>
-    This view is loaded from module: {!! config('deal.name') !!}
-  </p>
+  {{$items->links()}}
+
+ </div>
 @endsection

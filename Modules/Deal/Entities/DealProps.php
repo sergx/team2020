@@ -8,6 +8,10 @@ class DealProps extends Model
 {
   protected $fillable = [];
 
+  public function DealLog(){
+    return $this->belongsTo('Modules\Deal\Entities\Deal');
+  }
+
   // public function PLACEHOLDER(){
   // return $this->hasMany('Modules\PLACEHOLDER\Entities\PLACEHOLDER');
   // return $this->hasOne('Modules\PLACEHOLDER\Entities\PLACEHOLDER');

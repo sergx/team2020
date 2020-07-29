@@ -6,7 +6,12 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">{{ __('Dashboard') }}</div>
+        <div class="card-header">
+          Ваш уровень доступа — 
+          @foreach ($user->roles as $role)
+            {{__('common.role_'.$role->name)}}
+          @endforeach
+        </div>
 
         <div class="card-body">
           @if (session('status'))
@@ -15,6 +20,12 @@
             </div>
           @endif
           <ul>
+            @hasanyrole('admin')
+            <li>
+              <a href="{{ route('user.index') }}">{{ __('common.user_title') }}</a>
+            </li>
+            @endhasanyrole
+            @hasanyrole('agent|admin')
             <li>
               <a href="{{ route('buyer.index') }}">{{ __('common.buyer_title') }}</a>
               /
@@ -35,8 +46,15 @@
               /
               <a href="{{ route('punktpriem.create') }}">{{ __('common.create') }}</a>
             </li>
+            <li>
+              <a href="{{ route('deal.index') }}">{{ __('common.deal_title') }}</a>
+              /
+              <a href="{{ route('deal.create') }}">{{ __('common.create') }}</a>
+            </li>
+            @else
+              Ваша учетная запись ожидает подтверждения
+            @endhasanyrole
           </ul>
-          {{ __('You are logged in!') }}
         </div>
       </div>
     </div>

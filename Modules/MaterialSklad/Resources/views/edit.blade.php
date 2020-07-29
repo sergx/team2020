@@ -12,8 +12,28 @@
     </div>
 
     <div class="form-group">
-      {{Form::label('description','Описание')}}
-      {{Form::textarea('description', $item->description, ['class' => 'form-control','placeholder' => 'Описание', 'id' => 'article-ckeditor'])}}
+      {{Form::label('volume','Кол-во')}}
+      {{Form::text('volume', $item->volume, ['class' => 'form-control','placeholder' => 'Кол-во'])}}
+    </div>
+
+    <div class="form-group">
+      {{Form::label('place','Местоположение')}}
+      {{Form::text('place', $item->place, ['class' => 'form-control','placeholder' => 'Местоположение'])}}
+    </div>
+    {{--
+    <div class="form-group">
+      {{Form::label('seller_name','Продавец - имя / организация')}}
+      {{Form::text('seller_name', $item->seller_name, ['class' => 'form-control','placeholder' => ' - имя / организация'])}}
+    </div>
+    --}}
+    <div class="form-group">
+      {{Form::label('contacts','Контакты')}}
+      {{Form::text('contacts', $item->contacts, ['class' => 'form-control','placeholder' => 'Контакты'])}}
+    </div>
+
+    <div class="form-group">
+      {{Form::label('description','Комментарий')}}
+      {{Form::textarea('description', $item->description, ['class' => 'form-control','placeholder' => 'Комментарий', 'id' => 'article-ckeditor'])}}
     </div>
     {{Form::submit('Сохранить', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}

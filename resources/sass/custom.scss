@@ -1,0 +1,15 @@
+
+body{
+  color:#b5b5b5;
+}
+
+.form-control{
+  background-color: #5a5a5a;
+  color: #cecece;
+  
+  &:focus{
+    background-color: #5a5a5a;
+    color: #cecece;
+  }
+
+}

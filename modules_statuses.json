@@ -8,5 +8,6 @@
     "PunktPriem": true,
     "Deal": true,
     "UserRoles": true,
-    "UserRole": true
+    "UserRole": true,
+    "Notification": true
 }

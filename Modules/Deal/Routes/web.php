@@ -21,5 +21,6 @@ Route::prefix('deal')->group(function() {
   Route::get(   '/{id}',        $controllerName.'@show')    ->name($prefix.'.show');
   Route::get(   '/{id}/edit',      $controllerName.'@edit')    ->name($prefix.'.edit');
   Route::put(   '/{id}',        $controllerName.'@update')   ->name($prefix.'.update');
+  Route::get(   '/{id}/status_update',        $controllerName.'@statusUpdate')   ->name($prefix.'.status_update');
   Route::delete( '/{id}',        $controllerName.'@destroy')  ->name($prefix.'.destroy');
 });
