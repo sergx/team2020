@@ -8,6 +8,22 @@
     {{-- @TODO - Сделать связь с существующем материалом --}}
     <h3>О материале</h3>
     <div class="form-group">
+      {{Form::label('materialrezerv_id','Материал в резерве - из базы')}}
+      <a href="{{route('materialrezerv.create')}}" target="_blank" class="btn btn-primary btn-sm">Создать</a>
+      {{Form::select('materialrezerv_id', $materials_rezerv, null, ['class' => 'form-control', 'placeholder' => 'Выбрать..'])}}
+    </div>
+
+    <div class="form-group">
+      {{Form::label('materialsklad_id','Материал на складе - из базы')}}
+      <a href="{{route('materialsklad.create')}}" target="_blank" class="btn btn-primary btn-sm">Создать</a>
+      {{Form::select('materialsklad_id', $materials_sklad, null, ['class' => 'form-control', 'placeholder' => 'Выбрать..'])}}
+    </div>
+    {{--
+    <hr>
+    <h3>Если не из базы</h3>
+    <hr>
+
+    <div class="form-group">
       {{Form::label('material_name','Материал')}}
       {{Form::text('material_name', '', ['class' => 'form-control','placeholder' => 'Материал'])}}
     </div>
@@ -25,6 +41,12 @@
     <div class="form-group">
       {{Form::label('material_description','Комментарий по материалу')}}
       {{Form::textarea('material_description', '', ['class' => 'form-control','placeholder' => 'Комментарий по материалу'])}}
+    </div>
+    --}}
+
+    <h3>Фотографии</h3>
+    <div class="form-group">
+      {{Form::file('images[]', ['multiple'])}}
     </div>
     
     <hr>
@@ -54,6 +76,12 @@
     
     <h3>О покупателе</h3>
     <div class="form-group">
+      {{Form::label('buyer_id','Покупатель из базы')}}
+      <a href="{{route('buyer.create')}}" target="_blank" class="btn btn-primary btn-sm">Создать</a>
+      {{Form::select('buyer_id', $buyers, null, ['class' => 'form-control', 'placeholder' => 'Выбрать..'])}}
+    </div>
+    {{--
+    <div class="form-group">
       {{Form::label('buyer_name','Имя / Название организации')}}
       {{Form::text('buyer_name', '', ['class' => 'form-control','placeholder' => 'Имя / Название организации'])}}
     </div>
@@ -72,6 +100,7 @@
       {{Form::label('buyer_description','Детали условий сделки с покупателем')}}
       {{Form::textarea('buyer_description', '', ['class' => 'form-control','placeholder' => 'Детали условий сделки с покупателем'])}}
     </div>
+    --}}
 
     {{Form::submit('Сохранить', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}

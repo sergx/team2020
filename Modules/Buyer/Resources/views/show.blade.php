@@ -11,6 +11,13 @@
     @endforeach
   </ul>
 
+  @if (count($item->Files) )
+    <h3>Файлы</h3>
+    @foreach ($item->Files as $file)
+      <li>{{$file->filename}} - {{$file->path}}</li>
+    @endforeach
+  @endif
+
   <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Обновить</a>
 
  </div>

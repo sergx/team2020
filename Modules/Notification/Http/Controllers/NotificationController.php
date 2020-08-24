@@ -27,7 +27,6 @@ class NotificationController extends Controller
     $items = Notification::with(["NotificationViews" => function($q){
       $q->where('notification_views.user_id', '=', auth()->user()->id);
     }, "User", "model"])->orderBy('id','desc')->paginate(30);
-    //dd($items);
     
     return view('notification::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
   }
@@ -80,7 +79,6 @@ class NotificationController extends Controller
   public function edit($id)
   {
     $item = Notification::find($id);
-
     return view('notification::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
   }
 

@@ -1,11 +1,15 @@
 @extends('layouts.app')
 @section('content')
   <div class="container">
-    @include('inc.breadcrumbs')
+    @include('inc.breadcrumbs', ['breadcrumb_items' => [
+      ['href' => route('deal.index'), 'title' => 'Сделки'],
+      ['href' => route('deal.show', $item->id), 'title' => 'Id '.$item->id],      
+      ]])
     <h1>{{__("common.".$template_data['module']."_title")}} - {{__("common.".$template_data['template'])}}</h1>
 
     {!! Form::open(['route' => [$template_data['module'].'.update', $item->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     {{Form::hidden('_method', 'PUT')}}
+    {{Form::hidden('status', 'updated')}}
 
     <h3>О материале</h3>
     <div class="form-group">
@@ -26,6 +30,20 @@
     <div class="form-group">
       {{Form::label('material_description','Комментарий по материалу')}}
       {{Form::textarea('material_description', $item->material_description, ['class' => 'form-control','placeholder' => 'Комментарий по материалу'])}}
+    </div>
+
+    <h3>Фотографии</h3>
+    <div class="form-group">
+      {{Form::file('images[]', ['multiple', 'class' => 'mb-3'])}}
+      <div class="form-row align-items-center">
+        @if($item->images)
+          @foreach ($item->images as $image_item)
+          <div class="col">
+            <a href="{{$image_item}}" target="_blank"><img src="{{$image_item}}" alt="image" style="max-width:100%;max-height:300px;"></a>
+          </div>
+          @endforeach
+        @endif
+      </div>
     </div>
     
     <hr>

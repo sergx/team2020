@@ -1,0 +1,25 @@
+{
+  "name": "nwidart/personcontact",
+  "description": "",
+  "authors": [
+    {
+      "name": "Nicolas Widart",
+      "email": "n.widart@gmail.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Modules\\PersonContact\\Providers\\PersonContactServiceProvider"
+      ],
+      "aliases": {
+
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\PersonContact\\": ""
+    }
+  }
+}

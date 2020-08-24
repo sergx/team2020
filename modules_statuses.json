@@ -9,5 +9,8 @@
     "Deal": true,
     "UserRoles": true,
     "UserRole": true,
-    "Notification": true
+    "Notification": true,
+    "File": true,
+    "PersonContact": true,
+    "Seller": true
 }

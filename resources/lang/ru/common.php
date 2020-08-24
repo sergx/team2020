@@ -10,6 +10,10 @@ return [
   'buyer_updated' => 'Покупатель обновлен',
   'buyer_title' => 'Покупатели',
 
+  'seller_created' => 'Продавец добавлен',
+  'seller_updated' => 'Продавец обновлен',
+  'seller_title' => 'Продавцы',
+
   'user_title' => 'Пользователи',
 
   'materialsklad_created' => 'Материал на складе добавлен',
@@ -61,4 +65,6 @@ return [
   'role_agent' => 'Агент',
 
   'notification_title' => 'Уведомления',
+
+  'personcontact_title' => 'Контакт',
 ];

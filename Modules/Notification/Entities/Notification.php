@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class notification extends Model
 {
-  protected $fillable = [];
+  protected $fillable = [
+    'model_type',
+    'model_id',
+    'user_id',
+    'options',
+  ];
   protected $casts = [
     'options' => 'array',
   ];
@@ -25,7 +30,7 @@ class notification extends Model
 
   public function model()
   {
-    return $this->morphTo();
+    return $this->morphTo(/* __FUNCTION__, 'model_type', 'model_id' */);
   }
 
   public function NotificationViews(){

@@ -28,7 +28,7 @@ class BuyerController extends Controller
   public function index()
   {
     //$org = Buyer::with(['productCategories', 'productCategories.products'])->where('id', $id)->first();
-    $items = Buyer::paginate(10);
+    $items = Buyer::with(['Files'])->paginate(10);
     return view('buyer::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
   }
 
@@ -72,7 +72,7 @@ class BuyerController extends Controller
   public function show($id)
   {
     //$item = Buyer::where('id', $id)->first();
-    $item = Buyer::find($id);
+    $item = Buyer::with(['Files'])->find($id);
     return view('buyer::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
   }
 

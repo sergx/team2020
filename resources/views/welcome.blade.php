@@ -32,6 +32,11 @@
               <a href="{{ route('buyer.create') }}">{{ __('common.create') }}</a>
             </li>
             <li>
+              <a href="{{ route('seller.index') }}">{{ __('common.seller_title') }}</a>
+              /
+              <a href="{{ route('seller.create') }}">{{ __('common.create') }}</a>
+            </li>
+            <li>
               <a href="{{ route('materialsklad.index') }}">{{ __('common.materialsklad_title') }}</a>
               /
               <a href="{{ route('materialsklad.create') }}">{{ __('common.create') }}</a>

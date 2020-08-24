@@ -9,7 +9,7 @@
       @if (!empty($item->name))
         <li><a href="{{route($template_data['module'].'.show', $item->id)}}">{{$item->name}}</a>, {!!$item->description!!}</li>
       @else
-        <li><a href="{{route($template_data['module'].'.show', $item->id)}}">{{$item->material_name}}: {{$item->seller_name}} -> {{$item->buyer_name}}</a></li>
+        <li><a href="{{route($template_data['module'].'.show', $item->id)}}">{!!$item->getDealName()!!}</a></li>
       @endif
     @endforeach
   </ul>

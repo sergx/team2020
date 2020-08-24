@@ -1,0 +1,13 @@
+{
+  "name": "PersonContact",
+  "alias": "personcontact",
+  "description": "",
+  "keywords": [],
+  "order": 0,
+  "providers": [
+    "Modules\\PersonContact\\Providers\\PersonContactServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}
