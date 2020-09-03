@@ -17,47 +17,35 @@
     </ul>
   @endif
   
-  @if (!empty($deal_item->MaterialSklad[0]))
+  @if (count($deal_item->MaterialSklad))
   <h3>Материал на складе</h3>
     <ul>
-      <li>Материал: {{$deal_item->MaterialSklad[0]->name ?? "n/a"}}</li>
-      <li>Кол-во: {{$deal_item->MaterialSklad[0]->volume ?? "n/a"}}</li>
-      <li>Местоположение: {{$deal_item->MaterialSklad[0]->place ?? "n/a"}}</li>
-      <li>Комментарий по материалу: {{$deal_item->MaterialSklad[0]->description ?? "n/a"}}</li>
+      <li><a href="{{route("materialsklad.show", $deal_item->MaterialSklad->first()->id)}}">{{$deal_item->MaterialSklad->first()->name}}</a></li>
+      <li>Кол-во: {{$deal_item->MaterialSklad->first()->volume ?? "n/a"}}</li>
+      <li>Местоположение: {{$deal_item->MaterialSklad->first()->place ?? "n/a"}}</li>
     </ul>
   @endif
-  @if (!empty($deal_item->Buyer[0]))
-  <h3>О покупателе</h3>
+  @if (count($deal_item->Buyer))
+  <hr>
+  <h3>Покупатель</h3>
   <ul>
-    <li>Имя / Название организации: {{$deal_item->Buyer[0]->name ?? "n/a"}}</li>
-    <li>Телефон: {{$deal_item->Buyer[0]->phone ?? "n/a"}}</li>
-  </ul>
-  @endif
-  <h3>Условия сделки</h3>
-  <ul>
+    <li><a href="{{route("seller.show", $deal_item->Buyer->first()->id)}}">{{$deal_item->Buyer->first()->name}}</a></li>
     <li>Цена для покупателя: {{$deal_item->buyer_price ?? "n/a"}}</li>
     <li>Детали условий сделки с покупателем: {{$deal_item->buyer_description ?? "n/a"}}</li>
   </ul>
+  @include('inc.model-contacts', ['data' => $deal_item->Buyer->first()->PersonContacts, 'title' => 'Контакты покупателя', 'model' => 'buyer', 'model_id' => $deal_item->Buyer->first()->id, 'removable' => false])
+  @endif
 
-  <h3>О продавце</h3>
-  <ul>
-    <li>Имя / Название организации: {{$deal_item->seller_name ?? "n/a"}}</li>
-    <li>Телефон: {{$deal_item->seller_phone ?? "n/a"}}</li>
-    <li>Цена от продавца: {{$deal_item->seller_price ?? "n/a"}}</li>
-    <li>Детали условий сделки с продавцом: {{$deal_item->seller_description ?? "n/a"}}</li>
-  </ul>
-  <h3>Фотографии (images)</h3>
-  <div class="form-group">
-    <div class="form-row align-items-center">
-      @if($deal_item->images)
-        @foreach ($deal_item->images as $image_item)
-        <div class="col">
-          <a href="{{$image_item}}" target="_blank"><img src="{{$image_item}}" alt="image" style="max-width:100%;max-height:300px;"></a>
-        </div>
-        @endforeach
-      @endif
-    </div>
-  </div>
+  @if (count($deal_item->Seller))
+    <hr>
+    <h3>Продавец</h3>
+    <ul>
+      <li><a href="{{route("seller.show", $deal_item->Seller->first()->id)}}">{{$deal_item->Seller->first()->name}}</a></li>
+      <li>Цена от продавца: {{$deal_item->seller_price ?? "n/a"}}</li>
+      <li>Детали условий сделки с продавцом: {{$deal_item->seller_description ?? "n/a"}}</li>
+    </ul>
+    @include('inc.model-contacts', ['data' => $deal_item->Seller->first()->PersonContacts, 'title' => 'Контакты продавца', 'model' => 'seller', 'model_id' => $deal_item->Seller->first()->id, 'removable' => false])
+  @endif
 
   <h3>Фотографии (Files)</h3>
   <div class="form-group">

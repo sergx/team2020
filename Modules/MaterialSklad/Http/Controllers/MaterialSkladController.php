@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 use Modules\MaterialSklad\Entities\MaterialSklad;
+use Modules\Seller\Entities\Seller;
 
 class MaterialSkladController extends Controller
 {
@@ -32,7 +33,10 @@ class MaterialSkladController extends Controller
     */
   public function create()
   {
-    return view('materialsklad::create', ['template_data' => $this->t_d(['template' => 'create']) ]);
+    $seller = Seller::get()->pluck('name','id');
+    return view('materialsklad::create', [
+      'seller' => $seller,
+      'template_data' => $this->t_d(['template' => 'create']) ]);
   }
 
   /**
@@ -44,14 +48,12 @@ class MaterialSkladController extends Controller
   {
     $this->validate($request, [
       'name' => 'required',
+      'volume' => 'required',
+      'seller_id' => 'required',
     ]);
 
     $item = new MaterialSklad;
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
-    $item->place = $request->input('place');
-    $item->volume = $request->input('volume');
-    $item->contacts = $request->input('contacts');
+    $item->fill($request->all());
     $item->user_id = auth()->user()->id;
     $item->save();
 
@@ -65,7 +67,8 @@ class MaterialSkladController extends Controller
     */
   public function show($id)
   {
-    $item = MaterialSklad::find($id);
+    $item = MaterialSklad::with(['Seller'])->find($id);
+
     return view('materialsklad::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
   }
 

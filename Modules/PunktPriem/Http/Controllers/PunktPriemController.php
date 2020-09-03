@@ -66,7 +66,7 @@ class PunktPriemController extends Controller
     */
   public function show($id)
   {
-    $item = PunktPriem::find($id);
+    $item = PunktPriem::with(['PersonContacts','Files'])->find($id);
     return view('punktpriem::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
   }
 

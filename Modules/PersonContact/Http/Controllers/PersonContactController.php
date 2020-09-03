@@ -36,62 +36,30 @@ class PersonContactController extends Controller
 
     $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
     $model_elem = $model_elem::find($request->model_id);
-    
+
     $item = new PersonContact;
     $item->fill($request->all());
+    
     $item->user_id = auth()->user()->id;
-    if($model_elem){
-      $item->contactable_type = $model_elem->getClassNamespace();
-      $item->contactable_id = $model_elem->id;
-    }
-    $item->save();
+    $item->contactable_type = get_class($model_elem);
+    $item->contactable_id = $model_elem->id;
+
+    $model_elem->PersonContacts()->save($item);
     
     return redirect()->route($request->model.'.show', $request->model_id)->with('success', __('common.personcontact_created'));
   }
 
-  
-  // public function show($id)
-  // {
-  //   $item = PersonContact::find($id);
-  //   return view('personcontact::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
-  // }
 
-  
-  // public function edit($id)
-  // {
-  //   $item = PersonContact::find($id);
-  //   return view('personcontact::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
-  // }
+  public function destroy(Request $request)
+  {
+    $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    $model_elem = $model_elem::find($request->model_id);
 
-  // public function update(Request $request, $id)
-  // {
-  //   $this->validate($request, [
-  //     'name' => 'required',
-  //   ]);
-
-  //   $item = PersonContact::find($id);
-
-  //   if(auth()->user()->id !== $item->user_id){
-  //     return redirect()->route('home')->with('error', __('common.Unauthorized'));
-  //   }
-
-  //   $item->name = $request->input('name');
-  //   $item->description = $request->input('description');
-  //   $item->save();
-
-  //   return redirect('personcontact/')->with('success', __('common.personcontact_updated'));
-  // }
-
-
-  // public function destroy($id)
-  // {
-  //   $item = PersonContact::find($id);
-  //   if(auth()->user()->id !== $item->user_id){
-  //     return redirect()->route('home')->with('error', __('common.Unauthorized'));
-  //   }
-  //   $item->delete();
-  //   return redirect('personcontact/')->with('success', __('common.personcontact_deleted'));
-  // }
+    $personcontact_item = $model_elem->PersonContacts()->find($request->personcontact_id);
+    
+    $personcontact_item->delete();
+    return redirect()->route($request->model.'.show', $request->model_id)->with('success', __('common.personcontact_removed'));
+  }
 
 
   public function t_d($data)

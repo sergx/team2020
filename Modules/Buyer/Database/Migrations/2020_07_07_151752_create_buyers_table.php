@@ -19,8 +19,6 @@ class CreateBuyersTable extends Migration
       $table->string('name')->nullable();
       $table->string('description')->nullable();
       $table->string('place')->nullable();
-      $table->string('phone')->nullable();
-      $table->string('email')->nullable();
       $table->timestamps();
     });
   }

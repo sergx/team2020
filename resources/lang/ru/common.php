@@ -67,4 +67,11 @@ return [
   'notification_title' => 'Уведомления',
 
   'personcontact_title' => 'Контакт',
+  'personcontact_updated' => 'Контакт загружен',
+  'personcontact_removed' => 'Контакт удален',
+  'personcontact_was_not_removed' => 'Ошибка при уделаении контакта',
+  
+  'file_updated' => 'Файл загружен',
+  'file_removed' => 'Файл удален',
+  'file_was_not_removed' => 'Ошибка при уделаении файла',
 ];

@@ -6,29 +6,31 @@
     ]])
 
   <h1>{{$item->name}}</h1>
-
-  <a href="{{route('personcontact.create', ['model' => 'seller', 'model_id' => $item->id])}}">Добавить контакт</a>
-
   <ul>
     @foreach ($item->getAttributes() as $key => $value)
       <li>{{$key}} — {{$value}}</li>
     @endforeach
   </ul>
+  @include('inc.model-contacts', ['data' => $item->PersonContacts, 'title' => 'Контакты', 'model' => 'seller', 'model_id' => $item->id, 'removable' => true])
+  @include('inc.model-files',    ['data' => $item->Files, 'title' => 'Файлы', 'model' => 'seller', 'model_id' => $item->id, 'removable' => true])
 
-  @if ($item->PersonContacts()->exists())
-    <h3>Контакты</h3>
-    @foreach ($item->PersonContacts as $elem)
-      <li>{{$elem->name}}: {{$elem->phone}}, {{$elem->email}}</li>
-    @endforeach
+  @if (count($item->MaterialsSklad))
+    <h3>Материалы на складе от продавца</h3>
+    <ul>
+      @foreach ($item->MaterialsSklad as $elem)
+        <li><a href="{{route('materialsklad.show', $elem->id)}}">{{$elem->name}}, {{$elem->volume}}</a></li>
+      @endforeach
+    </ul>
   @endif
-  
-  @if ($item->Files()->exists())
-    <h3>Файлы</h3>
-    @foreach ($item->Files as $elem)
-      <li>{{$elem->filename}} - {{$elem->path}}</li>
-    @endforeach
+  @if (count($item->MaterialsRezerv))
+    <h3>Материалы в резерве от продавца</h3>
+    <ul>
+      @foreach ($item->MaterialsRezerv as $elem)
+        <li><a href="{{route('materialsklad.show', $elem->id)}}">{{$elem->name}}, {{$elem->volume}}</a></li>
+      @endforeach
+    </ul>
   @endif
-
+<hr>
   <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Обновить</a>
 
  </div>

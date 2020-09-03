@@ -10,6 +10,7 @@ use Modules\File\Entities\File;
 
 class FileController extends Controller
 {
+  use \App\Traits\filesHandleTrait;
   public $template_data = ['module' => 'file'];
 
   public function __construct()
@@ -17,119 +18,42 @@ class FileController extends Controller
     $this->middleware('auth'/*, ['except' => ['index','show']] */);
   }
 
-  /**
-    * Display a listing of the resource.
-    * @return Response
-    */
-  public function index()
+  public function create(Request $request)
   {
-    $items = File::paginate(10);
-    return view('file::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
+    return view('file::create', ['model' => $request->query('model'), 'model_id' => $request->query('model_id'), 'template_data' => $this->t_d(['template' => 'create']) ]);
   }
 
-  /**
-    * Show the form for creating a new resource.
-    * @return Response
-    */
-  public function create()
-  {
-    return view('file::create', ['template_data' => $this->t_d(['template' => 'create']) ]);
-  }
 
-  /**
-    * Store a newly created resource in storage.
-    * @param Request $request
-    * @return Response
-    */
-  public function store(Request $request)
-  {
+  public function store(Request $request){
     $this->validate($request, [
-      'name' => 'required',
+      'files' => 'required',
     ]);
 
-    $item = new File;
+    $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    $model_elem = $model_elem::find($request->model_id);
 
-    $request->file('images');
-    // Имя и расширение файла
-    $filenameWithExt = $request->file('main_image')->getClientOriginalName();
-    // Только оригинальное имя файла
-    $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+    \App\Traits\filesHandleTrait::storeModelFiles($request->file('files'), $model_elem); // filesHandleTrait
 
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
-    $item->user_id = auth()->user()->id;
-    $item->save();
-
-    return redirect('file/')->with('success', __('common.file_created'));
+    return redirect()->route($request->model.'.show', $request->model_id)->with('success', __('common.file_uploaded'));
   }
 
-  /**
-    * Show the specified resource.
-    * @param int $id
-    * @return Response
-    */
-  public function show($id)
+  public function destroy(Request $request)
   {
-    $item = File::find($id);
-    return view('file::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
-  }
+    $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    $model_elem = $model_elem::find($request->model_id);
 
-  /**
-    * Show the form for editing the specified resource.
-    * @param int $id
-    * @return Response
-    */
-  public function edit($id)
-  {
-    $item = File::find($id);
-    return view('file::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
-  }
+    //\App\Traits\filesHandleTrait::storeModelFiles($request->file('files'), $model_elem); // filesHandleTrait
 
-  /**
-    * Update the specified resource in storage.
-    * @param Request $request
-    * @param int $id
-    * @return Response
-    */
-  public function update(Request $request, $id)
-  {
-    $this->validate($request, [
-      'name' => 'required',
-    ]);
-
-    $item = File::find($id);
-
-    if(auth()->user()->id !== $item->user_id){
-      return redirect()->route('home')->with('error', __('common.Unauthorized'));
+    $file_item = $model_elem->Files()->find($request->file_id);
+    
+    if(\File::delete(public_path($file_item->path))){
+      $file_item->delete();
+      return redirect()->route($request->model.'.show', $request->model_id)->with('success', __('common.file_removed'));
+    }else{
+      return redirect()->route($request->model.'.show', $request->model_id)->with('danger', __('common.file_was_not_removed'));
     }
-
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
-    $item->save();
-
-    return redirect('file/')->with('success', __('common.file_updated'));
   }
 
-  /**
-    * Remove the specified resource from storage.
-    * @param int $id
-    * @return Response
-    */
-  public function destroy($id)
-  {
-    $item = File::find($id);
-    if(auth()->user()->id !== $item->user_id){
-      return redirect()->route('home')->with('error', __('common.Unauthorized'));
-    }
-    $item->delete();
-    return redirect('file/')->with('success', __('common.file_deleted'));
-  }
-
-
-  /**
-   * @param array $data
-   * @return array
-   */
   public function t_d($data)
   {
     return array_merge($this->template_data, $data);

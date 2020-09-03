@@ -30,6 +30,14 @@ class Seller extends Model
     return $this->belongsToMany('Modules\Deal\Entities\Deal', 'deal_seller');
   }
 
+  public function MaterialsSklad(){
+    return $this->hasMany('Modules\MaterialSklad\Entities\MaterialSklad');
+  }
+
+  public function MaterialsRezerv(){
+    return $this->hasMany('Modules\MaterialRezerv\Entities\MaterialRezerv');
+  }
+
   // public function PLACEHOLDER(){
   // return $this->hasMany('Modules\PLACEHOLDER\Entities\PLACEHOLDER');
   // return $this->hasOne('Modules\PLACEHOLDER\Entities\PLACEHOLDER');

@@ -4,17 +4,7 @@
     @include('inc.breadcrumbs', ['breadcrumb_items' => [
     ['href' => route('seller.index'), 'title' => 'Продавцы']    
     ]])
-    <h1>{{__("common.".$template_data['module']."_title")}} - {{__("common.".$template_data['template'])}}</h1>
-
-<pre>
-Название
-Местоположение
-Контакты
-Файлы
-В формате комментария - что покупал, насколько значим
-В более формальном виде, или в отдельном комментарии - какие потребоности, что хочет купить
-Соверщенные/текущие сделки
-</pre>
+    <h1>Добавить продавца</h1>
     {!! Form::open(['route' => $template_data['module'].'.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     <div class="form-group">
       {{Form::label('name','Название')}}
@@ -35,7 +25,7 @@
       {{Form::label('description_material','Потребоность в материалах')}}
       {{Form::textarea('description_material', '', ['class' => 'form-control','placeholder' => 'Комментарий по потребностям в материалах', 'id' => 'article-ckeditor'])}}
     </div>
-    {{Form::submit('Сохранить', ['class' => 'btn btn-primary'])}}
+    {{Form::submit('Создать и добавить контакты/файлы', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}
   </div>
 @endsection

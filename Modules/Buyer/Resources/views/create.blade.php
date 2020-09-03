@@ -1,13 +1,15 @@
 @extends('layouts.app')
 @section('content')
   <div class="container">
-    @include('inc.breadcrumbs')
-    <h1>{{__("common.".$template_data['module']."_title")}} - {{__("common.".$template_data['template'])}}</h1>
+    @include('inc.breadcrumbs', ['breadcrumb_items' => [
+    ['href' => route('buyer.index'), 'title' => 'Покупатели']    
+    ]])
+    <h1>Добавить покупателя</h1>
 
     {!! Form::open(['route' => $template_data['module'].'.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     <div class="form-group">
-      {{Form::label('name','Название')}}
-      {{Form::text('name', '', ['class' => 'form-control','placeholder' => 'Название'])}}
+      {{Form::label('name','Имя / Компания')}}
+      {{Form::text('name', '', ['class' => 'form-control','placeholder' => 'Имя / Компания'])}}
     </div>
 
     <div class="form-group">
@@ -16,20 +18,10 @@
     </div>
 
     <div class="form-group">
-      {{Form::label('phone','Телефон')}}
-      {{Form::text('phone', '', ['class' => 'form-control','placeholder' => 'Телефон'])}}
+      {{Form::label('description','Комментарий')}}
+      {{Form::textarea('description', '', ['class' => 'form-control','placeholder' => 'Комментарий'])}}
     </div>
-
-    <div class="form-group">
-      {{Form::label('email','Email')}}
-      {{Form::text('email', '', ['class' => 'form-control','placeholder' => 'Email'])}}
-    </div>
-
-    <div class="form-group">
-      {{Form::label('description','Описание')}}
-      {{Form::textarea('description', 'Описание <strong>по-умолчанию!</strong>', ['class' => 'form-control','placeholder' => 'Описание', 'id' => 'article-ckeditor'])}}
-    </div>
-    {{Form::submit('Сохранить', ['class' => 'btn btn-primary'])}}
+    {{Form::submit('Создать и добавить контакты/файлы', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}
   </div>
 @endsection

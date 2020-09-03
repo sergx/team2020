@@ -11,13 +11,9 @@
     @endforeach
   </ul>
 
-  @if (count($item->Files) )
-    <h3>Файлы</h3>
-    @foreach ($item->Files as $file)
-      <li>{{$file->filename}} - {{$file->path}}</li>
-    @endforeach
-  @endif
-
+  @include('inc.model-contacts', ['data' => $item->PersonContacts, 'title' => 'Контакты', 'model' => 'buyer', 'model_id' => $item->id, 'removable' => true])
+  @include('inc.model-files',    ['data' => $item->Files, 'title' => 'Файлы', 'model' => 'buyer', 'model_id' => $item->id, 'removable' => true])
+  <hr>
   <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Обновить</a>
 
  </div>

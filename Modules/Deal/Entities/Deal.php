@@ -7,19 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Deal extends Model
 {
   use \App\Traits\Multitenantable;
-  use \App\Traits\commonModelTrait;
+  //use \App\Traits\commonModelTrait;
 
   protected $fillable = [
-    'material_name',
-    'material_volume',
-    'material_place',
-    'material_description',
-    'seller_name',
-    'seller_phone',
+    //'materialrezerv_id',
+    //'materialsklad_id',
+    //'seller_id',
     'seller_price',
     'seller_description',
-    'buyer_name',
-    'buyer_phone',
+    //'buyer_id',
     'buyer_price',
     'buyer_description',
     'status',
@@ -53,6 +49,11 @@ class Deal extends Model
   public function Buyer()
   {
     return $this->belongsToMany('Modules\Buyer\Entities\Buyer', 'deal_buyer', 'deal_id', 'buyer_id');
+  }
+
+  public function Seller()
+  {
+    return $this->belongsToMany('Modules\Seller\Entities\Seller', 'deal_seller', 'deal_id', 'seller_id');
   }
 
   public function MaterialRezerv()

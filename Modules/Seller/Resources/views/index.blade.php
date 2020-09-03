@@ -2,7 +2,7 @@
 @section('content')
  <div class="container">
   @include('inc.breadcrumbs')
-  <h1>{{__("common.".$template_data['module']."_title")}}</h1>
+  <h1>{{__("common.".$template_data['module']."_title")}} <a href="{{route($template_data['module'].'.create')}}" class="btn btn-sm btn-primary">+ Добавить</a></h1>
   @if(count($items) > 0)
   <table class="table">
     <thead>

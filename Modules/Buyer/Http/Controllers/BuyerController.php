@@ -53,11 +53,7 @@ class BuyerController extends Controller
     ]);
 
     $item = new Buyer;
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
-    $item->place = $request->input('place');
-    $item->phone = $request->input('phone');
-    $item->email = $request->input('email');
+    $item->fill($request->all());
     $item->user_id = auth()->user()->id;
     $item->save();
 
@@ -105,11 +101,7 @@ class BuyerController extends Controller
       return redirect()->route('home')->with('error', __('common.Unauthorized'));
     }
 
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
-    $item->place = $request->input('place');
-    $item->phone = $request->input('phone');
-    $item->email = $request->input('email');
+    $item->fill($request->all());
     $item->save();
 
     return redirect('buyer/')->with('success', __('common.buyer_updated'));

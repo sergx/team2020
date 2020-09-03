@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('content')
   <div class="container">
-    @include('inc.breadcrumbs')
+    @include('inc.breadcrumbs', ['breadcrumb_items' => [
+      ['href' => route('punktpriem.index'), 'title' => 'Пункты приема']    
+      ]])
     <h1>{{__("common.".$template_data['module']."_title")}} - {{__("common.".$template_data['template'])}}</h1>
 
     {!! Form::open(['route' => [$template_data['module'].'.update', $item->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}

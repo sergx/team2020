@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('content')
   <div class="container">
-    @include('inc.breadcrumbs')
+    @include('inc.breadcrumbs', ['breadcrumb_items' => [
+      ['href' => route('materialsklad.index'), 'title' => 'Материалы на складе']    
+      ]])
     <h1>{{__("common.".$template_data['module']."_title")}} - {{__("common.".$template_data['template'])}}</h1>
 
     {!! Form::open(['route' => $template_data['module'].'.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
@@ -19,15 +21,11 @@
       {{Form::label('place','Местоположение')}}
       {{Form::text('place', '', ['class' => 'form-control','placeholder' => 'Местоположение'])}}
     </div>
-    {{--
+
     <div class="form-group">
-      {{Form::label('seller_name','Продавец - имя / организация')}}
-      {{Form::text('seller_name', '', ['class' => 'form-control','placeholder' => 'Продавец - имя / организация'])}}
-    </div>
-    --}}
-    <div class="form-group">
-      {{Form::label('contacts','Контакты')}}
-      {{Form::text('contacts', '', ['class' => 'form-control','placeholder' => 'Контакты'])}}
+      {{Form::label('seller_id','Продавец')}}
+      <a href="{{route('seller.create')}}" target="_blank" class="btn btn-primary btn-sm">+ Добавить нового</a>
+      {{Form::select('seller_id', $seller, null, ['class' => 'form-control', 'placeholder' => 'Выбрать..'])}}
     </div>
 
     <div class="form-group">

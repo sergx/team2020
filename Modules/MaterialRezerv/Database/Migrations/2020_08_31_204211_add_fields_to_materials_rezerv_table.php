@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFieldsToMaterialsSklad extends Migration
+class AddFieldsToMaterialsRezervTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,7 +13,8 @@ class AddFieldsToMaterialsSklad extends Migration
    */
   public function up()
   {
-    Schema::table('materials_sklad', function (Blueprint $table) {
+    Schema::table('materials_rezerv', function (Blueprint $table) {
+      $table->string('seller_id')->nullable();
       $table->string('volume')->nullable();
       $table->string('place')->nullable();
     });
@@ -26,7 +27,8 @@ class AddFieldsToMaterialsSklad extends Migration
    */
   public function down()
   {
-    Schema::table('materials_sklad', function (Blueprint $table) {
+    Schema::table('materials_rezerv', function (Blueprint $table) {
+      $table->dropColumn('seller_id');
       $table->dropColumn('volume');
       $table->dropColumn('place');
     });

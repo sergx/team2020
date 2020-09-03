@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 use Modules\MaterialRezerv\Entities\MaterialRezerv;
+use Modules\Seller\Entities\Seller;
 
 class MaterialRezervController extends Controller
 {
@@ -32,7 +33,10 @@ class MaterialRezervController extends Controller
     */
   public function create()
   {
-    return view('materialrezerv::create', ['template_data' => $this->t_d(['template' => 'create']) ]);
+    $seller = Seller::get()->pluck('name','id');
+    return view('materialrezerv::create', [
+      'seller' => $seller,
+      'template_data' => $this->t_d(['template' => 'create']) ]);
   }
 
   /**
@@ -44,11 +48,12 @@ class MaterialRezervController extends Controller
   {
     $this->validate($request, [
       'name' => 'required',
+      'volume' => 'required',
+      'seller_id' => 'required',
     ]);
 
     $item = new MaterialRezerv;
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
+    $item->fill($request->all());
     $item->user_id = auth()->user()->id;
     $item->save();
 
@@ -62,7 +67,7 @@ class MaterialRezervController extends Controller
     */
   public function show($id)
   {
-    $item = MaterialRezerv::find($id);
+    $item = MaterialRezerv::with(['Seller'])->find($id);
     return view('materialrezerv::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
   }
 
@@ -74,7 +79,8 @@ class MaterialRezervController extends Controller
   public function edit($id)
   {
     $item = MaterialRezerv::find($id);
-    return view('materialrezerv::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    $seller = Seller::get()->pluck('name','id');
+    return view('materialrezerv::edit', ['item' => $item, 'seller' => $seller, 'template_data' => $this->t_d(['template' => 'edit'])]);
   }
 
   /**

@@ -1,7 +1,10 @@
 @extends('layouts.app')
 @section('content')
   <div class="container">
-    @include('inc.breadcrumbs')
+    @include('inc.breadcrumbs', ['breadcrumb_items' => [
+      ['href' => route('materialsklad.index'), 'title' => 'Материалы на складе'],
+      ['href' => route('materialsklad.show', $item->id), 'title' => $item->name.", ".$item->volume]    
+      ]])
     <h1>{{__("common.".$template_data['module']."_title")}} - {{__("common.".$template_data['template'])}}</h1>
 
     {!! Form::open(['route' => [$template_data['module'].'.update', $item->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}

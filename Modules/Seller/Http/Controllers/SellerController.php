@@ -62,7 +62,7 @@ class SellerController extends Controller
     */
   public function show($id)
   {
-    $item = Seller::with(['PersonContacts'])->find($id);
+    $item = Seller::with(['PersonContacts', 'MaterialsSklad'])->find($id);
     return view('seller::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
   }
 
