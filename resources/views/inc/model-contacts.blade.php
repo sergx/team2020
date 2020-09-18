@@ -3,7 +3,10 @@
   <ul>
     @foreach ($data as $elem)
       <li>
-        {{$elem->name}}: {{$elem->phone}}, {{$elem->email}}
+        {{$elem->name}}:
+        {!! !empty($elem->phone) ? "<a href='tel:".$elem->phone."' style='color:inherit;text-decoration:none;cursor:default;'>".$elem->phone."</a>" : "" !!}
+        {!! !empty($elem->email) ? " / <a href='mailto:".$elem->email."' target='_blank'>".$elem->email."</a>" : "" !!}
+
         @if (!empty($removable))
           {!! Form::open(['route' => ['personcontact.destroy', ['model' => $model, 'model_id' => $model_id, 'personcontact_id' => $elem->id]], 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'd-inline-block']) !!}
           {{Form::hidden('_method', 'DELETE')}}

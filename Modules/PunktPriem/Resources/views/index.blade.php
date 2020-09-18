@@ -24,7 +24,7 @@
           <td><a href="{{route($template_data['module'].'.show', $item->id)}}">{{$item->name}}</a></td>
           <td>{{$item->address}}</td>
           <td>{{$item->description}}</td>
-          <td>{{$item->has_contract ? 'Есть': '——'}}</td>
+          <td>{{$item->has_contract ? 'Есть': '—'}}</td>
         </tr>
         @endforeach
       </tbody>

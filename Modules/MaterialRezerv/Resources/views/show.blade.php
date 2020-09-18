@@ -36,7 +36,7 @@
           @if($item->Seller->description)<p>Комментарий к продавцу — {{$item->Seller->description}}</p>@endif
           @if($item->Seller->description_material)<p>Комментарий по материалам — {{$item->Seller->description_material}}</p>@endif
         </div>
-        @include('inc.model-contacts', ['data' => $item->Seller->PersonContacts, 'title' => 'Контакты продавца', 'model' => 'seller', 'model_id' => $item->id, 'removable' => false])
+        @include('inc.model-contacts', ['data' => $item->Seller->PersonContacts, 'title' => 'Контакты продавца', 'model' => 'seller', 'model_id' => $item->id, 'removable' => true])
       </div>
     </div>
     @endif

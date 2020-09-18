@@ -22,7 +22,7 @@
         @if($item->description)<li>Комментарий — {{$item->description}}</li>@endif
       </ul>
     </div>
-    @include('inc.model-files', ['data' => $item->Files, 'title' => 'Изображения материала', 'model' => 'materialsklad', 'model_id' => $item->id, 'removable' => false])
+    @include('inc.model-files', ['data' => $item->Files, 'title' => 'Изображения материала', 'model' => 'materialsklad', 'model_id' => $item->id, 'removable' => true])
 
   </div>
 </div>
