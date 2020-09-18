@@ -1,33 +1,52 @@
-@extends('layouts.app')
-@section('content')
- <div class="container">
+@extends('layouts.with-sidebar')
+
+@section('head_content')
   @include('inc.breadcrumbs', ['breadcrumb_items' => [
     ['href' => route('materialrezerv.index'), 'title' => 'Материалы в резерве']    
     ]])
+@endsection
 
-  <h1>{{$item->name}}, {{$item->volume}}</h1>
+@section('content_with-sidebar')
 
-  <ul>
-    <li>Материал — {{$item->name}}</li>
-    <li>Кол-во — {{$item->volume}}</li>
-    <li>Местоположение — {{$item->place}}</li>
-    <li>Комментарий — {{$item->description}}</li>
-  </ul>
+<div class="card mb-4">
+  <h1 class="card-header h2">
+    {{$item->name}}, {{$item->volume}}
+  </h1>
+  <div class="card-body">
+    <div class="card-text">
+      <ul>
+        @if($item->name)<li>Материал — {{$item->name}}</li>@endif
+        @if($item->volume)<li>Кол-во — {{$item->volume}}</li>@endif
+        @if($item->place)<li>Местоположение — {{$item->place}}</li>@endif
+        @if($item->description)<li>Комментарий — {{$item->description}}</li>@endif
+      </ul>
+    </div>
+    @include('inc.model-files', ['data' => $item->Files, 'title' => 'Изображения материала', 'model' => 'materialrezerv', 'model_id' => $item->id, 'removable' => false])
 
+  </div>
+</div>
 
-  @include('inc.model-files', ['data' => $item->Files, 'title' => 'Изображения материала', 'model' => 'materialrezerv', 'model_id' => $item->id, 'removable' => false])
-
-  @if ($item->Seller()->exists())
+    @if ($item->Seller()->exists())
+    <div class="card">
+      <h3 class="card-header">
+        Источник (продавец) материала — <a href="{{route('seller.show', $item->Seller->id)}}">{{$item->Seller->name}}</a>
+      </h3>
+      <div class="card-body">
+        <div class="card-text">
+          @if($item->Seller->description)<p>Комментарий к продавцу — {{$item->Seller->description}}</p>@endif
+          @if($item->Seller->description_material)<p>Комментарий по материалам — {{$item->Seller->description_material}}</p>@endif
+        </div>
+        @include('inc.model-contacts', ['data' => $item->Seller->PersonContacts, 'title' => 'Контакты продавца', 'model' => 'seller', 'model_id' => $item->id, 'removable' => false])
+      </div>
+    </div>
+    @endif
+    
   <hr>
-  <h2>Продавец — <a href="{{route('seller.show', $item->Seller->id)}}">{{$item->Seller->name}}</a></h2>
-    <ul>
-      <li>Комментарий к продавцу — {{$item->Seller->description}}</li>
-      <li>Комментарий по материалам — {{$item->Seller->description_material}}</li>
-    </ul>
-    @include('inc.model-contacts', ['data' => $item->Seller->PersonContacts, 'title' => 'Контакты продавца', 'model' => 'seller', 'model_id' => $item->id, 'removable' => false])
-  @endif
 
-  <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Изменить</a>
+  <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Редактировать</a>
 
- </div>
+
+
+
+
 @endsection

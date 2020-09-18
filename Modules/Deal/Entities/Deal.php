@@ -15,7 +15,7 @@ class Deal extends Model
     //'seller_id',
     'seller_price',
     'seller_description',
-    //'buyer_id',
+    'user_id',
     'buyer_price',
     'buyer_description',
     'status',
@@ -71,13 +71,28 @@ class Deal extends Model
     $MaterialSklad = $this->MaterialSklad()->first();
     $MaterialRezerv = $this->MaterialRezerv()->first();
     $Buyer = $this->Buyer()->first();
-    $dealName = "Сделка от " . date("d-m-Y, H:i" , strtotime($this->attributes['created_at']));
     if(!empty($MaterialSklad)){
-      $dealName .= " — ".$MaterialSklad->name . ": ". $this->seller_name . "<small>" . $this->attributes['seller_price'] .  "</small> -> " . $Buyer->name . "<small>" . $this->attributes['buyer_price'] .  "</small>";
+      $dealName = $MaterialSklad->name . ": ". $this->seller_name . "<small>" . $this->attributes['seller_price'] .  "</small> -> " . $Buyer->name . "<small> " . $this->attributes['buyer_price'] .  "</small>";
     }elseif(!empty($MaterialRezerv)){
-      $dealName .= " — ".$MaterialRezerv->name . ": ". $this->seller_name . "<small>" . $this->attributes['seller_price'] .  "</small> -> " . $Buyer->name . "<small>" . $this->attributes['buyer_price'] .  "</small>";
+      $dealName = $MaterialRezerv->name . ": ". $this->seller_name . "<small>" . $this->attributes['seller_price'] .  "</small> -> " . $Buyer->name . "<small> " . $this->attributes['buyer_price'] .  "</small>";
     }
+    $dealName .= " от " . date("d-m-Y, H:i" , strtotime($this->attributes['created_at']));
     return $dealName;
+  }
+  
+  public function getMaterialAttribute()
+  {
+    $MaterialSklad = $this->MaterialSklad()->first();
+    $MaterialRezerv = $this->MaterialRezerv()->first();
+    if(!empty($MaterialSklad)){
+      return $MaterialSklad;
+    }elseif(!empty($MaterialRezerv)){
+      return $MaterialRezerv;
+    }
+  }
+  public function getNameAttribute()
+  {
+      return $this->getDealName();
   }
 
 

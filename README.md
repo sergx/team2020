@@ -1,5 +1,8 @@
 # team2020
 
+Laravel Modules:
+https://nwidart.com/laravel-modules/v6/advanced-tools/artisan-commands
+
 12.07
 Добавить в стандарном виде CRUD-модули для:
   ok Материалы на складе
@@ -95,3 +98,8 @@ user_id | notification_id | viewed (bool) | created_at | viewed_at
 Добавить сообщение при Отказе в сделке (Тут скорее требуется архитектурное решение)
 Вывести кол-во уведомлений (решается через axios)
 Чат (Можно и без vue реализовать - с перезагрузкой страницы)
+
+
+----------------
+Сделать хэшированные токеры для api
+https://laravel.com/docs/5.8/api-authentication#hashing-tokens

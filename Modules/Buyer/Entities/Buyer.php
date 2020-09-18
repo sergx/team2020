@@ -10,6 +10,7 @@ class Buyer extends Model
     'name',
     'description',
     'place',
+    'has_contract',
   ];
 
   public function Files()

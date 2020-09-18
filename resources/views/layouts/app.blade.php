@@ -9,9 +9,10 @@
 
   <title>{{ config('app.name', 'Laravel') }}</title>
 
-  <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}"></script>
 
+  <!-- Scripts -->
+  <script src="{{ mix('js/app.js') }}"></script>
+  
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700&display=swap" rel="stylesheet">
@@ -20,7 +21,7 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-  <div id="app">
+  <div>
     <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
       <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">

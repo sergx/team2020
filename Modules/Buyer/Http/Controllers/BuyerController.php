@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 use Modules\Buyer\Entities\Buyer;
+use Modules\Buyer\Transformers\APIBuyer;
+
 
 class BuyerController extends Controller
 {
@@ -29,7 +31,11 @@ class BuyerController extends Controller
   {
     //$org = Buyer::with(['productCategories', 'productCategories.products'])->where('id', $id)->first();
     $items = Buyer::with(['Files'])->paginate(10);
-    return view('buyer::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
+    if(\Request::is('api/*')){
+      return APIBuyer::collection($items);
+    }else{
+      return view('buyer::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
+    }
   }
 
   /**
@@ -38,7 +44,7 @@ class BuyerController extends Controller
    */
   public function create()
   {
-    return view('buyer::create', ['template_data' => $this->t_d(['template' => 'create']) ]);
+    return view('buyer::create_or_edit', ['template_data' => $this->t_d(['template' => 'create']) ]);
   }
 
   /**
@@ -56,8 +62,11 @@ class BuyerController extends Controller
     $item->fill($request->all());
     $item->user_id = auth()->user()->id;
     $item->save();
-
-    return redirect('buyer/')->with('success', __('common.buyer_created'));
+    if(\Request::is('api/*')){
+      return new APIBuyer($item);
+    }else{
+      return redirect('buyer/')->with('success', __('common.buyer_created'));
+    }
   }
 
   /**
@@ -69,7 +78,11 @@ class BuyerController extends Controller
   {
     //$item = Buyer::where('id', $id)->first();
     $item = Buyer::with(['Files'])->find($id);
-    return view('buyer::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
+    if(\Request::is('api/*')){
+      return new APIBuyer($item);
+    }else{
+      return view('buyer::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
+    }
   }
 
   /**
@@ -80,7 +93,11 @@ class BuyerController extends Controller
   public function edit($id)
   {
     $item = Buyer::find($id);
-    return view('buyer::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    if(\Request::is('api/*')){
+      return new APIBuyer($item);
+    }else{
+      return view('buyer::create_or_edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    }
   }
 
   /**
@@ -103,8 +120,11 @@ class BuyerController extends Controller
 
     $item->fill($request->all());
     $item->save();
-
-    return redirect('buyer/')->with('success', __('common.buyer_updated'));
+    if(\Request::is('api/*')){
+      return new APIBuyer($item);
+    }else{
+      return redirect('buyer/')->with('success', __('common.buyer_updated'));
+    }
   }
 
   /**
@@ -121,7 +141,11 @@ class BuyerController extends Controller
     }
 
     $item->delete();
-    return redirect('buyer/')->with('success', __('common.buyer_deleted'));
+    if(\Request::is('api/*')){
+      return new APIBuyer($item);
+    }else{
+      return redirect('buyer/')->with('success', __('common.buyer_deleted'));
+    }
   }
 
   /**

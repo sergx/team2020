@@ -33,7 +33,7 @@ class PunktPriemController extends Controller
     */
   public function create()
   {
-    return view('punktpriem::create', ['template_data' => $this->t_d(['template' => 'create']) ]);
+    return view('punktpriem::create_or_edit', ['template_data' => $this->t_d(['template' => 'create']) ]);
   }
 
   /**
@@ -48,11 +48,7 @@ class PunktPriemController extends Controller
     ]);
 
     $item = new PunktPriem;
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
-    $item->address = $request->input('address');
-    $item->phone = $request->input('phone');
-    $item->email = $request->input('email');
+    $item->fill($request->all());
     $item->user_id = auth()->user()->id;
     $item->save();
 
@@ -78,7 +74,7 @@ class PunktPriemController extends Controller
   public function edit($id)
   {
     $item = PunktPriem::find($id);
-    return view('punktpriem::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    return view('punktpriem::create_or_edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
   }
 
   /**
@@ -98,12 +94,7 @@ class PunktPriemController extends Controller
     if(auth()->user()->id !== $item->user_id){
       return redirect()->route('home')->with('error', __('common.Unauthorized'));
     }
-
-    $item->name = $request->input('name');
-    $item->description = $request->input('description');
-    $item->address = $request->input('address');
-    $item->phone = $request->input('phone');
-    $item->email = $request->input('email');
+    $item->fill($request->all());
     $item->save();
 
     return redirect('punktpriem/')->with('success', __('common.punktpriem_updated'));

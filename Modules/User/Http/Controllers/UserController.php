@@ -9,7 +9,10 @@ use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+
 use App\User;
+
+
 
 class UserController extends Controller
 {
@@ -67,7 +70,9 @@ class UserController extends Controller
     */
   public function show($id)
   {
-    return view('user::show');
+    $item = User::with(['PersonContacts', 'Files', 'roles'])->find($id);
+    //dd($item);
+    return view('user::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'index'])]);
   }
 
   /**

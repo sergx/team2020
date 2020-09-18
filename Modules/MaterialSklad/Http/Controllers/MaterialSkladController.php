@@ -34,7 +34,7 @@ class MaterialSkladController extends Controller
   public function create()
   {
     $seller = Seller::get()->pluck('name','id');
-    return view('materialsklad::create', [
+    return view('materialsklad::create_or_edit', [
       'seller' => $seller,
       'template_data' => $this->t_d(['template' => 'create']) ]);
   }
@@ -80,7 +80,7 @@ class MaterialSkladController extends Controller
   public function edit($id)
   {
     $item = MaterialSklad::find($id);
-    return view('materialsklad::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    return view('materialsklad::create_or_edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
   }
 
   /**

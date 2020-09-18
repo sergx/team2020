@@ -1,21 +1,37 @@
-@extends('layouts.app')
-@section('content')
- <div class="container">
+@extends('layouts.with-sidebar')
+
+@section('head_content')
   @include('inc.breadcrumbs', ['breadcrumb_items' => [
-    ['href' => route('punktpriem.index'), 'title' => 'Пункты приема']    
+    ['href' => route('punktpriem.index'), 'title' => 'Партнеры']    
     ]])
+@endsection
 
-  <h1>{{!empty($item['title']) ? $item['title'] : "ID ".$item->id }}</h1>
-
+@section('content_with-sidebar')
+<div class="d-flex justify-content-between align-items-center">
+  <h1 class="h2 mb-0">
+    {{$item->name}}
+  </h1>
+  @if ($item->has_contract)
+  <span class="badge badge-success">Договор есть</span>
+  @else
+  <span class="badge badge-secondary">Договора нет</span>
+  @endif
+</div>
   <ul>
-    @foreach ($item->getAttributes() as $key => $value)
-      <li>{{$key}} — {{$value}}</li>
-    @endforeach
+    @if ($item->address)
+      <li>address — {{$item->address}}</li>
+    @endif
+    @if ($item->description)
+      <li>description — {{$item->description}}</li>
+    @endif
+    @if ($item->place)  
+      <li>place — {{$item->place}}</li>
+    @endif
   </ul>
-  @include('inc.model-contacts', ['data' => $item->PersonContacts, 'title' => 'Контакты', 'model' => 'punktpriem', 'model_id' => $item->id, 'removable' => true])
-  @include('inc.model-files',    ['data' => $item->Files, 'title' => 'Файлы', 'model' => 'punktpriem', 'model_id' => $item->id, 'removable' => true])
+  @include('inc.model-contacts', ['data' => $item->PersonContacts, 'title' => 'Контакты', 'model' => 'PunktPriem', 'model_id' => $item->id, 'removable' => true])
+  @include('inc.model-files',    ['data' => $item->Files, 'title' => 'Файлы', 'model' => 'PunktPriem', 'model_id' => $item->id, 'removable' => true])
   <hr>
-  <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Обновить</a>
+  <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Редактировать</a>
 
- </div>
+ 
 @endsection

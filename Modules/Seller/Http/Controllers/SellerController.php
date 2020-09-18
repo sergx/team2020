@@ -33,7 +33,7 @@ class SellerController extends Controller
     */
   public function create()
   {
-    return view('seller::create', ['template_data' => $this->t_d(['template' => 'create']) ]);
+    return view('seller::create_or_edit', ['template_data' => $this->t_d(['template' => 'create']) ]);
   }
 
   /**
@@ -46,9 +46,11 @@ class SellerController extends Controller
     $this->validate($request, [
       'name' => 'required',
     ]);
-
+    //dd($request->all());
     $item = new Seller;
-    $item->fill($request->all());
+
+    //$data_to_pass = is_null( request('has_contract') ) ? request()->except('has_contract') : request()->all();
+    $item->fill(request()->all());
     $item->user_id = auth()->user()->id;
     $item->save();
 
@@ -74,7 +76,7 @@ class SellerController extends Controller
   public function edit($id)
   {
     $item = Seller::find($id);
-    return view('seller::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    return view('seller::create_or_edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
   }
 
   /**
@@ -94,8 +96,9 @@ class SellerController extends Controller
     if(auth()->user()->id !== $item->user_id){
       return redirect()->route('home')->with('error', __('common.Unauthorized'));
     }
-
-    $item->fill($request->all());
+    
+    //$data_to_pass = is_null( request('has_contract') ) ? request()->except('has_contract') : request()->all(); // 
+    $item->fill(request()->all());
     $item->save();
 
     return redirect('seller/')->with('success', __('common.seller_updated'));

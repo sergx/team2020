@@ -12,6 +12,8 @@ use Modules\Seller\Entities\Seller;
 use Modules\MaterialRezerv\Entities\MaterialRezerv;
 use Modules\MaterialSklad\Entities\MaterialSklad;
 
+use App\User;
+
 use Modules\Notification\Entities\Notification;
 
 class DealController extends Controller
@@ -51,6 +53,7 @@ class DealController extends Controller
     //dd(auth()->user()->hasRole('admin'));
 
     $items = Deal::orderBy('id', 'desc')->paginate(30);
+    //dd($items);
     return view('deal::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
   }
 
@@ -61,12 +64,14 @@ class DealController extends Controller
   public function create()
   {
     $buyers = Buyer::get()->pluck('name','id');
+    $agents = User::role('agent')->get()->pluck('name','id');
     $sellers = Seller::get()->pluck('name','id');
     $materials_rezerv = MaterialRezerv::get()->pluck('name','id');
     $materials_sklad = MaterialSklad::get()->pluck('name','id');
-    return view('deal::create', [
+    return view('deal::create_or_edit', [
       'buyers' => $buyers,
       'sellers' => $sellers,
+      'agents' => $agents,
       'materials_rezerv' => $materials_rezerv,
       'materials_sklad' => $materials_sklad,
       'template_data' => $this->t_d(['template' => 'create']) ]);
@@ -151,8 +156,28 @@ class DealController extends Controller
     */
   public function edit($id)
   {
-    $item = Deal::find($id);
-    return view('deal::edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    $item = Deal::where('id', $id)->with([
+      'Files',
+      'Buyer',
+      'Seller',
+      'MaterialRezerv',
+      'MaterialSklad',
+      'Notification' => function($query) {
+      $query->orderBy('id', 'desc');
+    }])->first();
+    $buyers = Buyer::get()->pluck('name','id');
+    $agents = User::role('agent')->get()->pluck('name','id');
+    $sellers = Seller::get()->pluck('name','id');
+    $materials_rezerv = MaterialRezerv::get()->pluck('name','id');
+    $materials_sklad = MaterialSklad::get()->pluck('name','id');
+    return view('deal::create_or_edit', [
+      'item' => $item,
+      'buyers' => $buyers,
+      'sellers' => $sellers,
+      'agents' => $agents,
+      'materials_rezerv' => $materials_rezerv,
+      'materials_sklad' => $materials_sklad,
+      'template_data' => $this->t_d(['template' => 'create']) ]);
   }
 
   /**
@@ -166,7 +191,7 @@ class DealController extends Controller
     $this->validate($request, $this->validate);
 
     $deal_item = Deal::find($id);
-    
+    //dd($request->all());
     // Формируем Уведомления
     foreach($request->all() as $key => $value){
       if(in_array($key, $deal_item->getFillable()) && $value !== $deal_item{$key}){
@@ -257,4 +282,10 @@ class DealController extends Controller
   {
     return array_merge($this->template_data, $data);
   }
+
+  // public function transferToUser(Request $request)
+  // {
+    
+  //   //return array_merge($this->template_data, $data);
+  // }
 }

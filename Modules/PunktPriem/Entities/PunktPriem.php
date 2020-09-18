@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class PunktPriem extends Model
 {
-  protected $fillable = [];
+  protected $fillable = [
+    'name',
+    'address',
+    'description',
+    'has_contract',
+  ];
 
   protected $table = "punkt_priem";
   

@@ -14,23 +14,23 @@ return [
   'seller_updated' => 'Продавец обновлен',
   'seller_title' => 'Продавцы',
 
-  'user_title' => 'Пользователи',
+  'user_title' => 'Агенты',
 
   'materialsklad_created' => 'Материал на складе добавлен',
   'materialsklad_updated' => 'Материал на складе обновлен',
-  'materialsklad_title' => 'Материал на складе',
+  'materialsklad_title' => 'Материалы на складе',
 
   'materialrezerv_created' => 'Материал в резерве добавлен',
   'materialrezerv_updated' => 'Материал в резерве обновлен',
-  'materialrezerv_title' => 'Материал в резерве',
+  'materialrezerv_title' => 'Материалы в резерве',
 
-  'punktpriem_created' => 'Пункт приема добавлен',
-  'punktpriem_title' => 'Пункт приема',
+  'punktpriem_created' => 'Партнер добавлен',
+  'punktpriem_title' => 'Партнеры',
 
   'deal_created' => 'Сделка добавлена',
   'deal_updated' => 'Сделка обновлена',
   'deal_status_updated' => 'Статус сделки обновлен',
-  'deal_title' => 'Сделка',
+  'deal_title' => 'Сделки',
   'deal_status_new' => 'Новая сделка',
   'deal_status_accept' => 'Сделка одобрена',
   'deal_status_decline' => 'Сделка отклонена',
@@ -56,6 +56,7 @@ return [
   'deal_formal_buyer_phone_changed' => 'Изменен телефон покупателя',
   'deal_formal_buyer_price_changed' => 'Изменена цена для покупателя',
   'deal_formal_buyer_description_changed' => 'Изменены детали условий сделки с продавцом',
+  'deal_formal_user_id_changed' => 'Изменен связанный пользователь',
 
 
   'deal_material_name' => 'Материал',

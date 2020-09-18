@@ -34,7 +34,7 @@ class MaterialRezervController extends Controller
   public function create()
   {
     $seller = Seller::get()->pluck('name','id');
-    return view('materialrezerv::create', [
+    return view('materialrezerv::create_or_edit', [
       'seller' => $seller,
       'template_data' => $this->t_d(['template' => 'create']) ]);
   }
@@ -80,7 +80,7 @@ class MaterialRezervController extends Controller
   {
     $item = MaterialRezerv::find($id);
     $seller = Seller::get()->pluck('name','id');
-    return view('materialrezerv::edit', ['item' => $item, 'seller' => $seller, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    return view('materialrezerv::create_or_edit', ['item' => $item, 'seller' => $seller, 'template_data' => $this->t_d(['template' => 'edit'])]);
   }
 
   /**

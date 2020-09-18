@@ -17,8 +17,9 @@ class CreateBuyersTable extends Migration
       $table->bigIncrements('id');
       $table->bigInteger('user_id')->nullable();
       $table->string('name')->nullable();
-      $table->string('description')->nullable();
       $table->string('place')->nullable();
+      $table->text('description')->nullable();
+      $table->text('description_material')->nullable();
       $table->timestamps();
     });
   }

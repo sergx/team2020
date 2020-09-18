@@ -19,7 +19,6 @@ class CreateSellersTable extends Migration
       $table->string('name')->nullable();
       $table->string('place')->nullable();
       $table->text('description')->nullable();
-      $table->text('description_material')->nullable();
       $table->timestamps();
     });
   }

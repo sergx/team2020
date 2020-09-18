@@ -11,15 +11,17 @@ trait Multitenantable {
   protected static function bootMultitenantable()
   {
     if (auth()->check()) {
+      // если пользователь администратор
+      if (!auth()->user()->hasRole('admin')) {
       // При создании объекта автоматом добавляем запись
       static::creating(function ($model) {
         $model->user_id = auth()->id();
       });
-      // если пользователь администратор, то выводим все
-      if (!auth()->user()->hasRole('admin')) {
-        static::addGlobalScope('user_id', function (Builder $builder) {
-          $builder->where('user_id', auth()->id());
-        });
+      
+      // выводим только закрепленное за пользователем
+      static::addGlobalScope('user_id', function (Builder $builder) {
+        $builder->where('user_id', auth()->id());
+      });
       }
     }
   }

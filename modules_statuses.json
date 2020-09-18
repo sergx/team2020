@@ -12,5 +12,6 @@
     "Notification": true,
     "File": true,
     "PersonContact": true,
-    "Seller": true
+    "Seller": true,
+    "Menu": true
 }

@@ -1,17 +1,22 @@
-@extends('layouts.app')
-@section('content')
- <div class="container">
+@extends('layouts.with-sidebar')
+
+@section('head_content')
   @include('inc.breadcrumbs')
-  <h1>{{__("common.".$template_data['module']."_title")}} <a href="{{route($template_data['module'].'.create')}}" class="btn btn-sm btn-primary">+ Добавить</a></h1>
-  @if(count($items) > 0)
+  <h1>{{__("common.".$template_data['module']."_title")}} <a href="{{route($template_data['module'].'.create')}}" class="btn btn-sm btn-primary">+ Добавить</a></h1>  
+@endsection
+
+@section('content_with-sidebar')
+
+@if(count($items) > 0)
+<div class="table-responsive mb-3">
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">Материал</th>
-        <th scope="col">Кол-во</th>
-        <th scope="col">Местоположение</th>
-        <th scope="col">Контакты</th>
-        <th scope="col">Комментарий</th>
+        <th class="text-nowrap" scope="col">Материал</th>
+        <th class="text-nowrap" scope="col">Кол-во</th>
+        <th class="text-nowrap" scope="col">Местоположение</th>
+        <th class="text-nowrap" scope="col">Контакты</th>
+        <th class="text-nowrap" scope="col">Комментарий</th>
       </tr>
     </thead>
     <tbody>
@@ -26,9 +31,8 @@
       @endforeach
     </tbody>
   </table>
-  @endif
-
-  {{$items->links()}}
-
- </div>
+</div>
+{{$items->links()}}
+@endif
+ 
 @endsection

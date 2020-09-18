@@ -13,6 +13,7 @@ class Seller extends Model
     'place',
     'description',
     'description_material',
+    'has_contract',
   ];
 
   public function Files()

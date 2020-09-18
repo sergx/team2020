@@ -29,17 +29,25 @@ class FileController extends Controller
       'files' => 'required',
     ]);
 
-    $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    if(strtolower($request->model) !== "user"){
+      $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    }else{
+      $model_elem = 'App\User';
+    }
     $model_elem = $model_elem::find($request->model_id);
 
     \App\Traits\filesHandleTrait::storeModelFiles($request->file('files'), $model_elem); // filesHandleTrait
 
-    return redirect()->route($request->model.'.show', $request->model_id)->with('success', __('common.file_uploaded'));
+    return redirect()->route(strtolower($request->model).'.show', $request->model_id)->with('success', __('common.file_uploaded'));
   }
 
   public function destroy(Request $request)
   {
-    $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    if(strtolower($request->model) !== "user"){
+      $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    }else{
+      $model_elem = 'App\User';
+    }
     $model_elem = $model_elem::find($request->model_id);
 
     //\App\Traits\filesHandleTrait::storeModelFiles($request->file('files'), $model_elem); // filesHandleTrait
@@ -48,9 +56,9 @@ class FileController extends Controller
     
     if(\File::delete(public_path($file_item->path))){
       $file_item->delete();
-      return redirect()->route($request->model.'.show', $request->model_id)->with('success', __('common.file_removed'));
+      return redirect()->route(strtolower($request->model).'.show', $request->model_id)->with('success', __('common.file_removed'));
     }else{
-      return redirect()->route($request->model.'.show', $request->model_id)->with('danger', __('common.file_was_not_removed'));
+      return redirect()->route(strtolower($request->model).'.show', $request->model_id)->with('danger', __('common.file_was_not_removed'));
     }
   }
 

@@ -33,8 +33,11 @@ class PersonContactController extends Controller
     $this->validate($request, [
       'name' => 'required',
     ]);
-
-    $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    if(strtolower($request->model) !== "user"){
+      $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    }else{
+      $model_elem = 'App\User';
+    }
     $model_elem = $model_elem::find($request->model_id);
 
     $item = new PersonContact;
@@ -46,19 +49,23 @@ class PersonContactController extends Controller
 
     $model_elem->PersonContacts()->save($item);
     
-    return redirect()->route($request->model.'.show', $request->model_id)->with('success', __('common.personcontact_created'));
+    return redirect()->route(strtolower($request->model).'.show', $request->model_id)->with('success', __('common.personcontact_created'));
   }
 
 
   public function destroy(Request $request)
   {
-    $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    if(strtolower($request->model) !== "user"){
+      $model_elem = 'Modules\\' .$request->model. '\Entities\\'.$request->model;
+    }else{
+      $model_elem = 'App\User';
+    }
     $model_elem = $model_elem::find($request->model_id);
 
     $personcontact_item = $model_elem->PersonContacts()->find($request->personcontact_id);
     
     $personcontact_item->delete();
-    return redirect()->route($request->model.'.show', $request->model_id)->with('success', __('common.personcontact_removed'));
+    return redirect()->route(strtolower($request->model).'.show', $request->model_id)->with('success', __('common.personcontact_removed'));
   }
 
 

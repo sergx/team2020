@@ -1,69 +1,78 @@
-@extends('layouts.app')
-@section('content')
- <div class="container">
+@extends('layouts.with-sidebar')
+
+@section('head_content')
   @include('inc.breadcrumbs', ['breadcrumb_items' => [['href' => route('deal.index'), 'title' => 'Сделки']]])
+@endsection
 
-  <h2>{!!$deal_item->getDealName()!!}</h2>
-  
-  <p>Статус сделки — <strong>{{__('common.deal_status_'.$deal_item->status)}}</strong></p>
+@section('content_with-sidebar')
 
-  @if (!empty($deal_item->MaterialRezerv[0]))
-  <h3>Материал в резерве</h3>
-    <ul>
-      <li>Материал: {{$deal_item->MaterialRezerv[0]->name ?? "n/a"}}</li>
-      <li>Кол-во: {{$deal_item->MaterialRezerv[0]->volume ?? "n/a"}}</li>
-      <li>Местоположение: {{$deal_item->MaterialRezerv[0]->place ?? "n/a"}}</li>
-      <li>Комментарий по материалу: {{$deal_item->MaterialRezerv[0]->description ?? "n/a"}}</li>
-    </ul>
-  @endif
-  
-  @if (count($deal_item->MaterialSklad))
-  <h3>Материал на складе</h3>
-    <ul>
-      <li><a href="{{route("materialsklad.show", $deal_item->MaterialSklad->first()->id)}}">{{$deal_item->MaterialSklad->first()->name}}</a></li>
-      <li>Кол-во: {{$deal_item->MaterialSklad->first()->volume ?? "n/a"}}</li>
-      <li>Местоположение: {{$deal_item->MaterialSklad->first()->place ?? "n/a"}}</li>
-    </ul>
-  @endif
-  @if (count($deal_item->Buyer))
-  <hr>
-  <h3>Покупатель</h3>
-  <ul>
-    <li><a href="{{route("seller.show", $deal_item->Buyer->first()->id)}}">{{$deal_item->Buyer->first()->name}}</a></li>
-    <li>Цена для покупателя: {{$deal_item->buyer_price ?? "n/a"}}</li>
-    <li>Детали условий сделки с покупателем: {{$deal_item->buyer_description ?? "n/a"}}</li>
-  </ul>
-  @include('inc.model-contacts', ['data' => $deal_item->Buyer->first()->PersonContacts, 'title' => 'Контакты покупателя', 'model' => 'buyer', 'model_id' => $deal_item->Buyer->first()->id, 'removable' => false])
-  @endif
+<div class="card mb-4">
+  <h1 class="card-header h2">
+    {!!$deal_item->getDealName()!!}
+  </h1>
+  <div class="card-body">
+    <div class="card-text">
+      <p>
+        Агент — <strong><a href="{{route("user.show", $deal_item->user_id)}}">{{$deal_item->User->name}}</a></strong>
+        <br> Статус сделки — <strong>{{__('common.deal_status_'.$deal_item->status)}}</strong>
+      </p>
 
-  @if (count($deal_item->Seller))
-    <hr>
-    <h3>Продавец</h3>
-    <ul>
-      <li><a href="{{route("seller.show", $deal_item->Seller->first()->id)}}">{{$deal_item->Seller->first()->name}}</a></li>
-      <li>Цена от продавца: {{$deal_item->seller_price ?? "n/a"}}</li>
-      <li>Детали условий сделки с продавцом: {{$deal_item->seller_description ?? "n/a"}}</li>
-    </ul>
-    @include('inc.model-contacts', ['data' => $deal_item->Seller->first()->PersonContacts, 'title' => 'Контакты продавца', 'model' => 'seller', 'model_id' => $deal_item->Seller->first()->id, 'removable' => false])
-  @endif
-
-  <h3>Фотографии (Files)</h3>
-  <div class="form-group">
-    <div class="form-row align-items-center">
-      @if($deal_item->Files)
-        @foreach ($deal_item->Files as $file)
-        <div class="col">
-          <a href="{{$file->path}}" target="_blank">
-            <img src="{{$file->path}}" alt="image" style="max-width:100%;max-height:300px;">
-            <span>{{$file->filename}}</span>
-          </a>
-        </div>
-        @endforeach
+      @if (!empty($deal_item->MaterialRezerv[0]))
+      <h3>Материал в резерве</h3>
+        <ul>
+          <li>Материал: {{$deal_item->MaterialRezerv[0]->name ?? "n/a"}}</li>
+          <li>Кол-во: {{$deal_item->MaterialRezerv[0]->volume ?? "n/a"}}</li>
+          <li>Местоположение: {{$deal_item->MaterialRezerv[0]->place ?? "n/a"}}</li>
+          <li>Комментарий по материалу: {{$deal_item->MaterialRezerv[0]->description ?? "n/a"}}</li>
+        </ul>
       @endif
+      
+      @if (count($deal_item->MaterialSklad))
+      <h3>Материал на складе</h3>
+        <ul>
+          <li><a href="{{route("materialsklad.show", $deal_item->MaterialSklad->first()->id)}}">{{$deal_item->MaterialSklad->first()->name}}</a></li>
+          <li>Кол-во: {{$deal_item->MaterialSklad->first()->volume ?? "n/a"}}</li>
+          <li>Местоположение: {{$deal_item->MaterialSklad->first()->place ?? "n/a"}}</li>
+        </ul>
+      @endif
+
     </div>
   </div>
+</div>
+
+@if (count($deal_item->Seller))
+<div class="card mb-4">
+  <h3 class="card-header">
+    Продавец — <a href="{{route("seller.show", $deal_item->Seller->first()->id)}}">{{$deal_item->Seller->first()->name}}</a>
+  </h3>
+  <div class="card-body">
+    <div class="card-text">
+      <p>Цена от продавца: {{$deal_item->seller_price ?? "n/a"}}</p>
+      <p>Детали условий сделки с продавцом: {{$deal_item->seller_description ?? "n/a"}}</p>
+    </div>
+    @include('inc.model-contacts', ['data' => $deal_item->Seller->first()->PersonContacts, 'title' => 'Контакты продавца', 'model' => 'Seller', 'model_id' => $deal_item->Seller->first()->id, 'removable' => false])
+  </div>
+</div>
+@endif
+
+  @if (count($deal_item->Buyer))
+    <div class="card mb-4">
+      <h3 class="card-header">
+        Покупатель — <a href="{{route("buyer.show", $deal_item->Buyer->first()->id)}}">{{$deal_item->Buyer->first()->name}}</a>
+      </h3>
+      <div class="card-body">
+        <div class="card-text">
+          <p>Цена для покупателя: {{$deal_item->buyer_price ?? "n/a"}}</p>
+          <p>Детали условий сделки с покупателем: {{$deal_item->buyer_description ?? "n/a"}}</p>
+        </div>
+        @include('inc.model-contacts', ['data' => $deal_item->Buyer->first()->PersonContacts, 'title' => 'Контакты покупателя', 'model' => 'Buyer', 'model_id' => $deal_item->Buyer->first()->id, 'removable' => false])
+      </div>
+    </div>
+  @endif
+
+  
   @if ($deal_item->user_id === auth()->user()->id || auth()->user()->can('edit deal'))
-    <a href="{{route($template_data['module'].'.edit', $deal_item['id'])}}" class="btn btn-primary">Изменить</a>
+    <a href="{{route($template_data['module'].'.edit', $deal_item['id'])}}" class="btn btn-primary">Редактировать</a>
   @endif
 
   @if (auth()->user()->can('change deal status'))
@@ -110,5 +119,5 @@
 
   
 
- </div>
+ 
 @endsection
