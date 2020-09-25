@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PersonContact extends Model
 {
+  use \App\Traits\commonModelTrait;
+
   protected $fillable = [
     'name',
     'phone',

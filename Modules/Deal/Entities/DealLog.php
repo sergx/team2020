@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DealLog extends Model
 {
+  use \App\Traits\commonModelTrait;
+
   protected $fillable = [];
 
   protected $table = "deal_log";

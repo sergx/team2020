@@ -86,40 +86,40 @@ class DealController extends Controller
   {
     $this->validate($request, $this->validate);
 
-    $deal_item = new Deal;
+    $item = new Deal;
     
-    $deal_item->fill($request->all());
+    $item->fill($request->all());
     if($request->hasFile('images'))
     {
-      $folder_store = 'deals/' . $deal_item->id . '/images/';
-      \App\Traits\filesHandleTrait::storeModelFiles($request->file('images'), $deal_item);
+      $folder_store = 'deals/' . $item->id . '/images/';
+      \App\Traits\filesHandleTrait::storeModelFiles($request->file('images'), $item);
     }
 
-    $deal_item->save();
+    $item->save();
 
     if(!empty($request->buyer_id)){
-      $deal_item->Buyer()->sync([$request->buyer_id]);
+      $item->Buyer()->sync([$request->buyer_id]);
     }else{
-      $deal_item->Buyer()->detach();
+      $item->Buyer()->detach();
     }
     if(!empty($request->seller_id)){
-      $deal_item->Seller()->sync([$request->seller_id]);
+      $item->Seller()->sync([$request->seller_id]);
     }else{
-      $deal_item->Seller()->detach();
+      $item->Seller()->detach();
     }
     if(!empty($request->materialrezerv_id)){
-      $deal_item->MaterialRezerv()->sync([$request->materialrezerv_id]);
+      $item->MaterialRezerv()->sync([$request->materialrezerv_id]);
     }else{
-      $deal_item->MaterialRezerv()->detach();
+      $item->MaterialRezerv()->detach();
     }
     if(!empty($request->materialsklad_id)){
-      $deal_item->MaterialSklad()->sync([$request->materialsklad_id]);
+      $item->MaterialSklad()->sync([$request->materialsklad_id]);
     }else{
-      $deal_item->MaterialSklad()->detach();
+      $item->MaterialSklad()->detach();
     }
 
 
-    \App\Traits\NotificationTrait::addNotification(get_class($deal_item), $deal_item->id, [
+    \App\Traits\NotificationTrait::addNotification(get_class($item), $item->id, [
       "formal_key" => 'common.deal_formal_created',
     ]);
 
@@ -133,7 +133,7 @@ class DealController extends Controller
     */
   public function show($id)
   {
-    $deal_item = Deal::where('id', $id)->with([
+    $item = Deal::where('id', $id)->with([
       'Files',
       'Buyer',
       'Seller',
@@ -142,9 +142,9 @@ class DealController extends Controller
       'Notification' => function($query) {
       $query->orderBy('id', 'desc');
     }])->first();
-    //dd($deal_item->MaterialRezerv[0]);
+    //dd($item->MaterialRezerv[0]);
     return view('deal::show', [
-      'deal_item' => $deal_item,
+      'item' => $item,
       'template_data' => $this->t_d(['template' => 'show'])
       ]);
   }
@@ -190,53 +190,53 @@ class DealController extends Controller
   {
     $this->validate($request, $this->validate);
 
-    $deal_item = Deal::find($id);
+    $item = Deal::find($id);
     //dd($request->all());
     // Формируем Уведомления
     foreach($request->all() as $key => $value){
-      if(in_array($key, $deal_item->getFillable()) && $value !== $deal_item{$key}){
-        \App\Traits\NotificationTrait::addNotification(get_class($deal_item), $deal_item->id, [
+      if(in_array($key, $item->getFillable()) && $value !== $item{$key}){
+        \App\Traits\NotificationTrait::addNotification(get_class($item), $item->id, [
           "formal_key" => 'common.deal_formal_'.$key.'_changed',
-          "old_value" => $deal_item{$key},
+          "old_value" => $item{$key},
           "new_value" => $value,
         ]);
       }
     }
     
-    $deal_item->fill($request->all());
+    $item->fill($request->all());
 
     // Обрабатываем фотографии
     if($request->hasFile('images'))
     {
-      $folder_store = 'deals/' . $deal_item->id . '/images/';
-      \App\Traits\filesHandleTrait::storeModelFiles($request->file('images'), $deal_item);
+      $folder_store = 'deals/' . $item->id . '/images/';
+      \App\Traits\filesHandleTrait::storeModelFiles($request->file('images'), $item);
 
-      \App\Traits\NotificationTrait::addNotification(get_class($deal_item), $deal_item->id, [
+      \App\Traits\NotificationTrait::addNotification(get_class($item), $item->id, [
         "formal_key" => 'common.deal_formal_images_changed',
       ]);
     }
 
-    $deal_item->save();
+    $item->save();
 
     if(!empty($request->buyer_id)){
-      $deal_item->Buyer()->sync([$request->buyer_id]);
+      $item->Buyer()->sync([$request->buyer_id]);
     }else{
-      $deal_item->Buyer()->detach();
+      $item->Buyer()->detach();
     }
     if(!empty($request->seller_id)){
-      $deal_item->Seller()->sync([$request->seller_id]);
+      $item->Seller()->sync([$request->seller_id]);
     }else{
-      $deal_item->Seller()->detach();
+      $item->Seller()->detach();
     }
     if(!empty($request->materialrezerv_id)){
-      $deal_item->MaterialRezerv()->sync([$request->materialrezerv_id]);
+      $item->MaterialRezerv()->sync([$request->materialrezerv_id]);
     }else{
-      $deal_item->MaterialRezerv()->detach();
+      $item->MaterialRezerv()->detach();
     }
     if(!empty($request->materialsklad_id)){
-      $deal_item->MaterialSklad()->sync([$request->materialsklad_id]);
+      $item->MaterialSklad()->sync([$request->materialsklad_id]);
     }else{
-      $deal_item->MaterialSklad()->detach();
+      $item->MaterialSklad()->detach();
     }
 
     return redirect('deal/')->with('success', __('common.deal_updated'));
@@ -244,16 +244,16 @@ class DealController extends Controller
 
   public function statusUpdate(Request $request, $id)
   {
-    $deal_item = Deal::find($id);
+    $item = Deal::find($id);
     if(auth()->user()->hasPermissionTo('change deal status')){
-      \App\Traits\NotificationTrait::addNotification(get_class($deal_item), $deal_item->id, [
+      \App\Traits\NotificationTrait::addNotification(get_class($item), $item->id, [
         "formal_key" => 'deal_formal_status_changed',
-        "old_value" => $deal_item->status,
+        "old_value" => $item->status,
         "new_value" => $request['status'],
       ]);
 
-      $deal_item->status = $request['status'];
-      $deal_item->save();
+      $item->status = $request['status'];
+      $item->save();
 
       return redirect('deal/'.$id)->with('success', __('common.deal_status_'.$request['status']));
     }else{

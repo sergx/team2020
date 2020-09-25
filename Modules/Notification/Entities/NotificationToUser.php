@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class notificationToUser extends Model
 {
+  use \App\Traits\commonModelTrait;
+
   public $timestamps = false;
   protected $fillable = ['user_id','notification_id'];
 

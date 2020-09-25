@@ -1,0 +1,13 @@
+{
+  "name": "Outgoing",
+  "alias": "outgoing",
+  "description": "",
+  "keywords": [],
+  "order": 0,
+  "providers": [
+    "Modules\\Outgoing\\Providers\\OutgoingServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

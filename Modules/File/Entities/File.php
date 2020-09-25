@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
+  use \App\Traits\commonModelTrait;
+
   protected $fillable = [
     'filename',
     'path',

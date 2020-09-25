@@ -1,0 +1,25 @@
+{
+  "name": "nwidart/outgoing",
+  "description": "",
+  "authors": [
+    {
+      "name": "Nicolas Widart",
+      "email": "n.widart@gmail.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Modules\\Outgoing\\Providers\\OutgoingServiceProvider"
+      ],
+      "aliases": {
+
+      }
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Modules\\Outgoing\\": ""
+    }
+  }
+}

@@ -13,7 +13,7 @@
       <thead>
         <tr>
           <th class="text-nowrap" scope="col"></th>
-          <th class="text-nowrap" scope="col">Адрес</th>
+          <th class="text-nowrap" scope="col">Местоположение</th>
           <th class="text-nowrap" scope="col">Комментарий</th>
           <th class="text-nowrap" scope="col">Договор</th>
         </tr>

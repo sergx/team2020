@@ -5,9 +5,7 @@ namespace Modules\Seller\Entities;
 use Illuminate\Database\Eloquent\Model;
 
 class Seller extends Model
-{
-  use \App\Traits\commonModelTrait;
-  
+{  
   protected $fillable = [
     'name',
     'place',

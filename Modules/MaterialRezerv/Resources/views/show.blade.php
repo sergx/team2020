@@ -21,7 +21,7 @@
         @if($item->description)<li>Комментарий — {{$item->description}}</li>@endif
       </ul>
     </div>
-    @include('inc.model-files', ['data' => $item->Files, 'title' => 'Изображения материала', 'model' => 'materialrezerv', 'model_id' => $item->id, 'removable' => false])
+    @include('inc.model-files', ['data' => $item->Files, 'title' => 'Изображения материала', 'model' => 'materialrezerv', /* 'model_b64' => base64_encode(get_class($item)), */'model_id' => $item->id, 'removable' => false])
 
   </div>
 </div>
@@ -40,7 +40,9 @@
       </div>
     </div>
     @endif
-    
+
+    @include('inc.model-outgoings')
+
   <hr>
 
   <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Редактировать</a>

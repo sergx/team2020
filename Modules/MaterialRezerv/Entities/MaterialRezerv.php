@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MaterialRezerv extends Model
 {
+  use \App\Traits\commonModelTrait;
+
   protected $fillable = [
     'name',
     'description',
@@ -24,6 +26,11 @@ class MaterialRezerv extends Model
   public function Files()
   {
     return $this->morphMany('Modules\File\Entities\File', 'fileable', 'fileable_type', 'fileable_id');
+  }
+
+  public function OutgoingCosts()
+  {
+    return $this->morphMany('Modules\Outgoing\Entities\OutgoingCost', 'outgoingcostable', 'outgoingcostable_type', 'outgoingcostable_id');
   }
 
   // public function PLACEHOLDER(){

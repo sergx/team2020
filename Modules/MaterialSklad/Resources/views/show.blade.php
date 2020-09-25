@@ -41,6 +41,8 @@
 </div>
 @endif
 
+@include('inc.model-outgoings')
+
 <hr>
 
 <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Редактировать</a>

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class notification extends Model
 {
+  use \App\Traits\commonModelTrait;
+
   protected $fillable = [
     'model_type',
     'model_id',

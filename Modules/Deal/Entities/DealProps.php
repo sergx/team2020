@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DealProps extends Model
 {
+  use \App\Traits\commonModelTrait;
+
   protected $fillable = [];
 
   public function DealLog(){

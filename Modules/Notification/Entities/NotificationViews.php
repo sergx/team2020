@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class NotificationViews extends Model
 {
+  use \App\Traits\commonModelTrait;
+
   protected $fillable = [];
 
   // public function PLACEHOLDER(){

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Deal extends Model
 {
+  use \App\Traits\commonModelTrait;
   use \App\Traits\Multitenantable;
-  //use \App\Traits\commonModelTrait;
 
   protected $fillable = [
     //'materialrezerv_id',
@@ -64,6 +64,11 @@ class Deal extends Model
   public function MaterialSklad()
   {
     return $this->belongsToMany('Modules\MaterialSklad\Entities\MaterialSklad', 'deal_materialsklad', 'deal_id', 'materialsklad_id');
+  }
+
+  public function OutgoingCosts()
+  {
+    return $this->morphMany('Modules\Outgoing\Entities\OutgoingCost', 'outgoingcostable', 'outgoingcostable_type', 'outgoingcostable_id');
   }
 
   public function getDealName()

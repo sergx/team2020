@@ -13,5 +13,6 @@
     "File": true,
     "PersonContact": true,
     "Seller": true,
-    "Menu": true
+    "Menu": true,
+    "Outgoing": true
 }

@@ -1,4 +1,4 @@
-<h3>{{ $title ?? 'Файлы' }} <a href="{{route('file.create', ['model' => $model, 'model_id' => $model_id])}}" class="btn btn-sm btn-primary">+ Добавить</a></h3>
+<h3>{{ $title ?? 'Файлы' }} <a href="{{route('file.create', ['model' => $model, /*'model_b64' => $model_b64,*/ 'model_id' => $model_id])}}" class="btn btn-sm btn-primary">+ Добавить</a></h3>
 @if (count($data))
 
     @foreach ($data as $elem)
