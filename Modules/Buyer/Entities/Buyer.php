@@ -11,8 +11,10 @@ class Buyer extends Model
   protected $fillable = [
     'name',
     'description',
+    'description_material',
     'place',
     'has_contract',
+    'admin_verification',
   ];
 
   public function Files()

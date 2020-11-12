@@ -30,7 +30,7 @@ class BuyerController extends Controller
   public function index()
   {
     //$org = Buyer::with(['productCategories', 'productCategories.products'])->where('id', $id)->first();
-    $items = Buyer::with(['Files'])->paginate(10);
+    $items = Buyer::with(['Files'])->paginate(25);
     if(\Request::is('api/*')){
       return APIBuyer::collection($items);
     }else{
@@ -65,7 +65,8 @@ class BuyerController extends Controller
     if(\Request::is('api/*')){
       return new APIBuyer($item);
     }else{
-      return redirect('buyer/')->with('success', __('common.buyer_created'));
+      //return redirect('buyer/')->with('success', __('common.buyer_created'));
+      return redirect()->route('buyer.show', $item->id)->with('success', __('common.buyer_updated'));
     }
   }
 
@@ -123,7 +124,8 @@ class BuyerController extends Controller
     if(\Request::is('api/*')){
       return new APIBuyer($item);
     }else{
-      return redirect('buyer/')->with('success', __('common.buyer_updated'));
+      //return redirect('buyer/')->with('success', __('common.buyer_updated'));
+      return redirect()->route('buyer.show', $id)->with('success', __('common.buyer_updated'));
     }
   }
 

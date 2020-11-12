@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddHasContractToBuyersTable extends Migration
+class AddAdminVerficationFieldToBuyersTable extends Migration
 {
   /**
    * Run the migrations.
@@ -14,7 +14,7 @@ class AddHasContractToBuyersTable extends Migration
   public function up()
   {
     Schema::table('buyers', function (Blueprint $table) {
-      $table->boolean('has_contract')->default(0);
+      $table->boolean('admin_verification')->default(0);
     });
   }
 
@@ -26,7 +26,7 @@ class AddHasContractToBuyersTable extends Migration
   public function down()
   {
     Schema::table('buyers', function (Blueprint $table) {
-      $table->dropColumn('has_contract');
+      $table->dropColumn('admin_verification');
     });
   }
 }

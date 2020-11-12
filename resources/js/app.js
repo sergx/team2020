@@ -6,7 +6,6 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
 
 
 
@@ -21,7 +20,29 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+
+// Приложение:
+//window.Vue = require('vue');
+
+// import VueRouter from 'vue-router';
+// import router from './router';
+// //import laraRoute from './route';
+// import vmodal from 'vue-js-modal'
+// import App from './components/App'; // Тут корневой компонент приложения, содержащий <router-view></router-view> (Технический компонент для вывода компонента, соответствующего текущему path)
+
+// Vue.use(VueRouter);  // подключение плагина
+// Vue.use(vmodal); // https://euvl.github.io/vue-js-modal/Intro.html
+
+// const app = new Vue({
+//   'el' : '#app',
+//   render : r => r(App),
+//   router
+// });
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,6 +50,3 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-});

@@ -7,7 +7,7 @@
     {!! Form::open(['route' => [$template_data['module'].'.store', [ 'model' => $model, 'model_id' => $model_id]], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     <div class="form-group">
       {{Form::label('name','Имя')}}
-      {{Form::text('name', '', ['class' => 'form-control','placeholder' => 'Имя'])}}
+      {{Form::text('name', 'n/a', ['class' => 'form-control','placeholder' => 'Имя'])}}
     </div>
 
     <div class="form-group">
