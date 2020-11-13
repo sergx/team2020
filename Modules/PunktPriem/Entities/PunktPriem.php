@@ -15,7 +15,7 @@ class PunktPriem extends Model
     'has_contract',
   ];
 
-  protected $table = "punkt_priem";
+  protected $table = "team_punkt_priem";
   
   public function Files()
   {

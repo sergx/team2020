@@ -10,7 +10,7 @@ class DealLog extends Model
 
   protected $fillable = [];
 
-  protected $table = "deal_log";
+  protected $table = "team_deal_log";
 
   public function Deal(){
     return $this->belongsTo('Modules\Deal\Entities\Deal');

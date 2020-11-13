@@ -13,7 +13,7 @@ class CreateFilesTable extends Migration
    */
   public function up()
   {
-    Schema::create('files', function (Blueprint $table) {
+    Schema::create('team_files', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->string('filename')->nullable();
       $table->string('path')->nullable();
@@ -30,6 +30,6 @@ class CreateFilesTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('files');
+    Schema::dropIfExists('team_files');
   }
 }

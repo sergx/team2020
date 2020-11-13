@@ -16,6 +16,8 @@ class PersonContact extends Model
     'contactable_id',
   ];
 
+  protected $table = "team_person_contacts";
+
   // public function PLACEHOLDER(){
   // return $this->hasMany('Modules\PLACEHOLDER\Entities\PLACEHOLDER');
   // return $this->hasOne('Modules\PLACEHOLDER\Entities\PLACEHOLDER');

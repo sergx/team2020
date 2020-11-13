@@ -18,6 +18,8 @@ class OutgoingCost extends Model
     'outgoingcostable_id',
   ];
 
+  protected $table = "team_outgoing_costs";
+
   public $route_base = 'outgoing'; // Чтобы можно было сгенерировать route('outgoing.show'), или ключ словаря
 
   public function Outgoing(){

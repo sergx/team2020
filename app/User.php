@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name', 'email', 'password', 'api_token'
     ];
 
+    protected $table = "team_users";
+
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -13,7 +13,7 @@ class CreateBuyersTable extends Migration
    */
   public function up()
   {
-    Schema::create('buyers', function (Blueprint $table) {
+    Schema::create('team_buyers', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->bigInteger('user_id')->nullable();
       $table->string('name')->nullable();
@@ -31,6 +31,6 @@ class CreateBuyersTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('buyers');
+    Schema::dropIfExists('team_buyers');
   }
 }

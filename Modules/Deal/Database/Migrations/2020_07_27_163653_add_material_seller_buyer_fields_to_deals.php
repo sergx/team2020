@@ -13,7 +13,7 @@ class AddMaterialSellerBuyerFieldsToDeals extends Migration
    */
   public function up()
   {
-    Schema::table('deals', function (Blueprint $table) {
+    Schema::table('team_deals', function (Blueprint $table) {
 
       $table->string('seller_price')->nullable();
       $table->text('seller_description')->nullable();
@@ -29,7 +29,7 @@ class AddMaterialSellerBuyerFieldsToDeals extends Migration
    */
   public function down()
   {
-    Schema::table('deals', function (Blueprint $table) {
+    Schema::table('team_deals', function (Blueprint $table) {
       $table->dropColumn('seller_price');
       $table->dropColumn('seller_description');
       $table->dropColumn('buyer_price');

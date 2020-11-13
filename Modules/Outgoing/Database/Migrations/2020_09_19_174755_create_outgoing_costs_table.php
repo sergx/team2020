@@ -13,7 +13,7 @@ class CreateOutgoingCostsTable extends Migration
    */
   public function up()
   {
-    Schema::create('outgoing_costs', function (Blueprint $table) {
+    Schema::create('team_outgoing_costs', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->tinyInteger('outgoing_id')->nullable();
       $table->text('description')->nullable();
@@ -33,6 +33,6 @@ class CreateOutgoingCostsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('outgoing_costs');
+    Schema::dropIfExists('team_outgoing_costs');
   }
 }

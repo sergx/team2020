@@ -13,6 +13,8 @@ class Outgoing extends Model
     'name',
   ];
 
+  protected $table = "team_outgoings";
+
   public function OutgoingCosts(){
     return $this->hasMany('Modules\Outgoing\Entities\OutgoingCost');
   }

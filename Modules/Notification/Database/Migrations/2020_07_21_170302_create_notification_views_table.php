@@ -13,7 +13,7 @@ class CreateNotificationViewsTable extends Migration
    */
   public function up()
   {
-    Schema::create('notification_views', function (Blueprint $table) {
+    Schema::create('team_notification_views', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->bigInteger('notification_id')->nullable();
       $table->bigInteger('user_id')->nullable();
@@ -28,6 +28,6 @@ class CreateNotificationViewsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('notification_views');
+    Schema::dropIfExists('team_notification_views');
   }
 }

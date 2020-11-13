@@ -13,7 +13,7 @@ class CreateDealMaterialrezervTable extends Migration
    */
   public function up()
   {
-    Schema::create('deal_materialrezerv', function (Blueprint $table) {
+    Schema::create('team_deal_materialrezerv', function (Blueprint $table) {
       $table->bigInteger('deal_id');
       $table->bigInteger('materialrezerv_id');
     });
@@ -26,6 +26,6 @@ class CreateDealMaterialrezervTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('deal_materialrezerv');
+    Schema::dropIfExists('team_deal_materialrezerv');
   }
 }

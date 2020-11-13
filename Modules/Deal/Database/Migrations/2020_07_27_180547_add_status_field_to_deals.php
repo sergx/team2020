@@ -13,7 +13,7 @@ class AddStatusFieldToDeals extends Migration
    */
   public function up()
   {
-    Schema::table('deals', function (Blueprint $table) {
+    Schema::table('team_deals', function (Blueprint $table) {
       $table->string('status')->default("new");
     });
   }
@@ -25,7 +25,7 @@ class AddStatusFieldToDeals extends Migration
    */
   public function down()
   {
-    Schema::table('deals', function (Blueprint $table) {
+    Schema::table('team_deals', function (Blueprint $table) {
       $table->dropColumn('status');
     });
   }

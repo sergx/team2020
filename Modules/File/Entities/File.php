@@ -15,6 +15,8 @@ class File extends Model
     'fileable_id',
   ];
 
+  protected $table = "team_files";
+
   // public function PLACEHOLDER(){
   // return $this->hasMany('Modules\PLACEHOLDER\Entities\PLACEHOLDER');
   // return $this->hasOne('Modules\PLACEHOLDER\Entities\PLACEHOLDER');

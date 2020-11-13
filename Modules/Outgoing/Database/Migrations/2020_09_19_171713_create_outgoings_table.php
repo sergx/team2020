@@ -13,7 +13,7 @@ class CreateOutgoingsTable extends Migration
    */
   public function up()
   {
-    Schema::create('outgoings', function (Blueprint $table) {
+    Schema::create('team_outgoings', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->integer('user_id');
       $table->string('name')->nullable();
@@ -28,6 +28,6 @@ class CreateOutgoingsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('outgoings');
+    Schema::dropIfExists('team_outgoings');
   }
 }

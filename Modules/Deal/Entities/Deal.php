@@ -24,6 +24,8 @@ class Deal extends Model
     'images' => 'array',
   ];
 
+  protected $table = "team_deals";
+
   public function DealLog(){
     return $this->hasMany('Modules\Deal\Entities\DealLog');
   }
@@ -48,22 +50,22 @@ class Deal extends Model
 
   public function Buyer()
   {
-    return $this->belongsToMany('Modules\Buyer\Entities\Buyer', 'deal_buyer', 'deal_id', 'buyer_id');
+    return $this->belongsToMany('Modules\Buyer\Entities\Buyer', 'team_deal_buyer', 'deal_id', 'buyer_id');
   }
 
   public function Seller()
   {
-    return $this->belongsToMany('Modules\Seller\Entities\Seller', 'deal_seller', 'deal_id', 'seller_id');
+    return $this->belongsToMany('Modules\Seller\Entities\Seller', 'team_deal_seller', 'deal_id', 'seller_id');
   }
 
   public function MaterialRezerv()
   {
-    return $this->belongsToMany('Modules\MaterialRezerv\Entities\MaterialRezerv', 'deal_materialrezerv', 'deal_id', 'materialrezerv_id');
+    return $this->belongsToMany('Modules\MaterialRezerv\Entities\MaterialRezerv', 'team_deal_materialrezerv', 'deal_id', 'materialrezerv_id');
   }
 
   public function MaterialSklad()
   {
-    return $this->belongsToMany('Modules\MaterialSklad\Entities\MaterialSklad', 'deal_materialsklad', 'deal_id', 'materialsklad_id');
+    return $this->belongsToMany('Modules\MaterialSklad\Entities\MaterialSklad', 'team_deal_materialsklad', 'deal_id', 'materialsklad_id');
   }
 
   public function OutgoingCosts()

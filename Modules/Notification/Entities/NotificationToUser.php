@@ -11,6 +11,8 @@ class notificationToUser extends Model
   public $timestamps = false;
   protected $fillable = ['user_id','notification_id'];
 
+  protected $table = "team_notification_to_users";
+
   // public function PLACEHOLDER(){
   // return $this->hasMany('Modules\PLACEHOLDER\Entities\PLACEHOLDER');
   // return $this->hasOne('Modules\PLACEHOLDER\Entities\PLACEHOLDER');

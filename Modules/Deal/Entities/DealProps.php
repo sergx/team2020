@@ -10,6 +10,8 @@ class DealProps extends Model
 
   protected $fillable = [];
 
+  protected $table = "team_deal_props";
+
   public function DealLog(){
     return $this->belongsTo('Modules\Deal\Entities\Deal');
   }

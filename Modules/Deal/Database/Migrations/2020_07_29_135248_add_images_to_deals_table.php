@@ -13,7 +13,7 @@ class AddImagesToDealsTable extends Migration
    */
   public function up()
   {
-    Schema::table('deals', function (Blueprint $table) {
+    Schema::table('team_deals', function (Blueprint $table) {
       //$table->text('images')->nullable();
     });
   }
@@ -25,7 +25,7 @@ class AddImagesToDealsTable extends Migration
    */
   public function down()
   {
-    Schema::table('deals', function (Blueprint $table) {
+    Schema::table('team_deals', function (Blueprint $table) {
       //$table->dropColumn('images');
     });
   }

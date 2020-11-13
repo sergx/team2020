@@ -13,7 +13,7 @@ class AddFieldsToMaterialsSklad extends Migration
    */
   public function up()
   {
-    Schema::table('materials_sklad', function (Blueprint $table) {
+    Schema::table('team_materials_sklad', function (Blueprint $table) {
       $table->string('volume')->nullable();
       $table->string('place')->nullable();
     });
@@ -26,7 +26,7 @@ class AddFieldsToMaterialsSklad extends Migration
    */
   public function down()
   {
-    Schema::table('materials_sklad', function (Blueprint $table) {
+    Schema::table('team_materials_sklad', function (Blueprint $table) {
       $table->dropColumn('volume');
       $table->dropColumn('place');
     });

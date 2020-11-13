@@ -14,6 +14,8 @@ class Seller extends Model
     'has_contract',
   ];
 
+  protected $table = "team_sellers";
+
   public function Files()
   {
     return $this->morphMany('Modules\File\Entities\File', 'fileable', 'fileable_type', 'fileable_id');
@@ -26,7 +28,7 @@ class Seller extends Model
   
   public function Deals()
   {
-    return $this->belongsToMany('Modules\Deal\Entities\Deal', 'deal_seller');
+    return $this->belongsToMany('Modules\Deal\Entities\Deal', 'team_deal_seller');
   }
 
   public function MaterialsSklad(){

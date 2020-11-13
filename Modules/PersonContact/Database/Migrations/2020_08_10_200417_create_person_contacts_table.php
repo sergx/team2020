@@ -13,7 +13,7 @@ class CreatePersonContactsTable extends Migration
    */
   public function up()
   {
-    Schema::create('person_contacts', function (Blueprint $table) {
+    Schema::create('team_person_contacts', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->integer('user_id')->nullable();
       $table->string('name')->nullable();
@@ -33,6 +33,6 @@ class CreatePersonContactsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('person_contacts');
+    Schema::dropIfExists('team_person_contacts');
   }
 }

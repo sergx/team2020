@@ -13,7 +13,7 @@ class AddAdminVerficationFieldToBuyersTable extends Migration
    */
   public function up()
   {
-    Schema::table('buyers', function (Blueprint $table) {
+    Schema::table('team_buyers', function (Blueprint $table) {
       $table->boolean('admin_verification')->default(0);
     });
   }
@@ -25,7 +25,7 @@ class AddAdminVerficationFieldToBuyersTable extends Migration
    */
   public function down()
   {
-    Schema::table('buyers', function (Blueprint $table) {
+    Schema::table('team_buyers', function (Blueprint $table) {
       $table->dropColumn('admin_verification');
     });
   }

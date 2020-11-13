@@ -13,7 +13,7 @@ class CreateDealsTable extends Migration
    */
   public function up()
   {
-    Schema::create('deals', function (Blueprint $table) {
+    Schema::create('team_deals', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->bigInteger('user_id')->nullable();
       $table->timestamps();
@@ -27,6 +27,6 @@ class CreateDealsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('deals');
+    Schema::dropIfExists('team_deals');
   }
 }

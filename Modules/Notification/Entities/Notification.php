@@ -18,6 +18,8 @@ class notification extends Model
     'options' => 'array',
   ];
 
+  protected $table = "team_notifications";
+
   // public function PLACEHOLDER(){
   // return $this->hasMany('Modules\PLACEHOLDER\Entities\PLACEHOLDER');
   // return $this->hasOne('Modules\PLACEHOLDER\Entities\PLACEHOLDER');

@@ -13,7 +13,7 @@ class CreatePunktPriemsTable extends Migration
    */
   public function up()
   {
-    Schema::create('punkt_priem', function (Blueprint $table) {
+    Schema::create('team_punkt_priem', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->bigInteger('user_id')->nullable();
       $table->string('name')->nullable();
@@ -33,6 +33,6 @@ class CreatePunktPriemsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('punkt_priem');
+    Schema::dropIfExists('team_punkt_priem');
   }
 }

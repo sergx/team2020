@@ -13,7 +13,7 @@ class AddHasContractToPunktPriemTable extends Migration
    */
   public function up()
   {
-    Schema::table('punkt_priem', function (Blueprint $table) {
+    Schema::table('team_punkt_priem', function (Blueprint $table) {
       $table->boolean('has_contract')->default(0);
     });
   }
@@ -25,7 +25,7 @@ class AddHasContractToPunktPriemTable extends Migration
    */
   public function down()
   {
-    Schema::table('punkt_priem', function (Blueprint $table) {
+    Schema::table('team_punkt_priem', function (Blueprint $table) {
       $table->dropColumn('has_contract');
     });
   }

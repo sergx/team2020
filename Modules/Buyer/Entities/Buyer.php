@@ -17,6 +17,8 @@ class Buyer extends Model
     'admin_verification',
   ];
 
+  protected $table = "team_buyers";
+
   public function Files()
   {
     return $this->morphMany('Modules\File\Entities\File', 'fileable', 'fileable_type', 'fileable_id');
@@ -29,6 +31,6 @@ class Buyer extends Model
   
   public function Deals()
   {
-    return $this->belongsToMany('Modules\Deal\Entities\Deal', 'deal_buyer');
+    return $this->belongsToMany('Modules\Deal\Entities\Deal', 'team_deal_buyer');
   }
 }

@@ -16,7 +16,7 @@ class MaterialSklad extends Model
     'comment',
   ];
 
-  protected $table = 'materials_sklad';
+  protected $table = 'team_materials_sklad';
 
   public function Seller(){
     return $this->belongsTo('Modules\Seller\Entities\Seller');

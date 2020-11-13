@@ -10,6 +10,8 @@ class NotificationViews extends Model
 
   protected $fillable = [];
 
+  protected $table = "team_notification_views";
+
   // public function PLACEHOLDER(){
   // return $this->hasMany('Modules\PLACEHOLDER\Entities\PLACEHOLDER');
   // return $this->hasOne('Modules\PLACEHOLDER\Entities\PLACEHOLDER');

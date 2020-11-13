@@ -13,7 +13,7 @@ class AddHasContractToBuyersTable extends Migration
    */
   public function up()
   {
-    Schema::table('buyers', function (Blueprint $table) {
+    Schema::table('team_buyers', function (Blueprint $table) {
       $table->boolean('has_contract')->default(0);
     });
   }
@@ -25,7 +25,7 @@ class AddHasContractToBuyersTable extends Migration
    */
   public function down()
   {
-    Schema::table('buyers', function (Blueprint $table) {
+    Schema::table('team_buyers', function (Blueprint $table) {
       $table->dropColumn('has_contract');
     });
   }

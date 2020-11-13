@@ -13,7 +13,7 @@ class CreateSellersTable extends Migration
    */
   public function up()
   {
-    Schema::create('sellers', function (Blueprint $table) {
+    Schema::create('team_sellers', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->bigInteger('user_id')->nullable();
       $table->string('name')->nullable();
@@ -30,6 +30,6 @@ class CreateSellersTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('sellers');
+    Schema::dropIfExists('team_sellers');
   }
 }

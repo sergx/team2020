@@ -13,7 +13,7 @@ class AddSellerIdToMaterialsSkladTable extends Migration
    */
   public function up()
   {
-    Schema::table('materials_sklad', function (Blueprint $table) {
+    Schema::table('team_materials_sklad', function (Blueprint $table) {
       $table->string('seller_id')->nullable();
     });
   }
@@ -25,7 +25,7 @@ class AddSellerIdToMaterialsSkladTable extends Migration
    */
   public function down()
   {
-    Schema::table('materials_sklad', function (Blueprint $table) {
+    Schema::table('team_materials_sklad', function (Blueprint $table) {
       $table->dropColumn('seller_id');
     });
   }

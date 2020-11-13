@@ -13,7 +13,7 @@ class AddFieldsToMaterialsRezervTable extends Migration
    */
   public function up()
   {
-    Schema::table('materials_rezerv', function (Blueprint $table) {
+    Schema::table('team_materials_rezerv', function (Blueprint $table) {
       $table->string('seller_id')->nullable();
       $table->string('volume')->nullable();
       $table->string('place')->nullable();
@@ -27,7 +27,7 @@ class AddFieldsToMaterialsRezervTable extends Migration
    */
   public function down()
   {
-    Schema::table('materials_rezerv', function (Blueprint $table) {
+    Schema::table('team_materials_rezerv', function (Blueprint $table) {
       $table->dropColumn('seller_id');
       $table->dropColumn('volume');
       $table->dropColumn('place');

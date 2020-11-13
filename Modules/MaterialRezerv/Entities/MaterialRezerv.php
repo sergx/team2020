@@ -17,7 +17,7 @@ class MaterialRezerv extends Model
     'comment',
   ];
 
-  protected $table = 'materials_rezerv';
+  protected $table = 'team_materials_rezerv';
 
   public function Seller(){
     return $this->belongsTo('Modules\Seller\Entities\Seller');

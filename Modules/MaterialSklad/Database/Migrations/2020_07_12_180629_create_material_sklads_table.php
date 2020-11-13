@@ -13,7 +13,7 @@ class CreateMaterialSkladsTable extends Migration
    */
   public function up()
   {
-    Schema::create('materials_sklad', function (Blueprint $table) {
+    Schema::create('team_materials_sklad', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->bigInteger('user_id')->nullable();
       $table->string('name')->nullable();
@@ -29,6 +29,6 @@ class CreateMaterialSkladsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('materials_sklad');
+    Schema::dropIfExists('team_materials_sklad');
   }
 }
