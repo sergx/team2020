@@ -64,6 +64,7 @@ return [
 
   'role_admin' => 'Админ (аналитик)',
   'role_agent' => 'Агент',
+  'role_page_renter' => 'Арендатор страниц',
 
   'notification_title' => 'Уведомления',
 

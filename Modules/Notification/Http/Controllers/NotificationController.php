@@ -25,7 +25,7 @@ class NotificationController extends Controller
   public function index()
   {
     $items = Notification::with(["NotificationViews" => function($q){
-      $q->where('notification_views.user_id', '=', auth()->user()->id);
+      $q->where('team_notification_views.user_id', '=', auth()->user()->id);
     }, "User", "model"])->orderBy('id','desc')->paginate(30);
     
     return view('notification::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);

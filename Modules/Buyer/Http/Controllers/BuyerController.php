@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 use Modules\Buyer\Entities\Buyer;
-use Modules\Buyer\Transformers\APIBuyer;
+use Modules\Buyer\Transformers\ApiTransform;
 
 
 class BuyerController extends Controller
@@ -32,7 +32,7 @@ class BuyerController extends Controller
     //$org = Buyer::with(['productCategories', 'productCategories.products'])->where('id', $id)->first();
     $items = Buyer::with(['Files'])->paginate(25);
     if(\Request::is('api/*')){
-      return APIBuyer::collection($items);
+      return ApiTransform::collection($items);
     }else{
       return view('buyer::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
     }
@@ -63,7 +63,7 @@ class BuyerController extends Controller
     $item->user_id = auth()->user()->id;
     $item->save();
     if(\Request::is('api/*')){
-      return new APIBuyer($item);
+      return new ApiTransform($item);
     }else{
       //return redirect('buyer/')->with('success', __('common.buyer_created'));
       return redirect()->route('buyer.show', $item->id)->with('success', __('common.buyer_updated'));
@@ -80,7 +80,7 @@ class BuyerController extends Controller
     //$item = Buyer::where('id', $id)->first();
     $item = Buyer::with(['Files'])->find($id);
     if(\Request::is('api/*')){
-      return new APIBuyer($item);
+      return new ApiTransform($item);
     }else{
       return view('buyer::show', ['item' => $item, 'template_data' => $this->t_d(['template' => 'show'])]);
     }
@@ -95,7 +95,7 @@ class BuyerController extends Controller
   {
     $item = Buyer::find($id);
     if(\Request::is('api/*')){
-      return new APIBuyer($item);
+      return new ApiTransform($item);
     }else{
       return view('buyer::create_or_edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
     }
@@ -122,7 +122,7 @@ class BuyerController extends Controller
     $item->fill($request->all());
     $item->save();
     if(\Request::is('api/*')){
-      return new APIBuyer($item);
+      return new ApiTransform($item);
     }else{
       //return redirect('buyer/')->with('success', __('common.buyer_updated'));
       return redirect()->route('buyer.show', $id)->with('success', __('common.buyer_updated'));
@@ -144,7 +144,7 @@ class BuyerController extends Controller
 
     $item->delete();
     if(\Request::is('api/*')){
-      return new APIBuyer($item);
+      return new ApiTransform($item);
     }else{
       return redirect('buyer/')->with('success', __('common.buyer_deleted'));
     }

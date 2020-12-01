@@ -18,6 +18,12 @@ class UserController extends Controller
 {
 
   public $template_data = ['module' => 'user'];
+
+  public function __construct()
+  {
+    $this->middleware(['auth', 'role:admin']);
+  }
+
   /**
     * Display a listing of the resource.
     * @return Response

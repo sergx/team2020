@@ -14,5 +14,6 @@
     "PersonContact": true,
     "Seller": true,
     "Menu": true,
-    "Outgoing": true
+    "Outgoing": true,
+    "ModxResource": true
 }

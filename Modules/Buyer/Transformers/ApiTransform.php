@@ -4,7 +4,7 @@ namespace Modules\Buyer\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class APIBuyer extends JsonResource
+class ApiTransform extends JsonResource
 {
   /**
    * Transform the resource into an array.

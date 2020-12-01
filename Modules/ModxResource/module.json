@@ -1,0 +1,13 @@
+{
+  "name": "ModxResource",
+  "alias": "modxresource",
+  "description": "",
+  "keywords": [],
+  "order": 0,
+  "providers": [
+    "Modules\\ModxResource\\Providers\\ModxResourceServiceProvider"
+  ],
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::prefix('notification')->group(function() {
   $prefix = 'notification';
   $controllerName = 'NotificationController';
@@ -25,3 +25,4 @@ Route::prefix('notification')->group(function() {
   //Route::put(   '/{id}',        $controllerName.'@update')   ->name($prefix.'.update');
   //Route::delete( '/{id}',        $controllerName.'@destroy')  ->name($prefix.'.destroy');
 });
+*/
