@@ -7,6 +7,11 @@
     <a href="{{ route('user.index') }}">{{ __('common.user_title') }}</a>
   </li>
   @endhasanyrole
+  @hasanyrole('page_renter|admin')
+  <li class="list-group-item d-flex align-items-center">
+    <a href="{{route('fastedit.show', auth()->user()->id)}}">Редактировать контакты и цены</a>
+  </li>
+  @endhasanyrole
   @hasanyrole('agent|admin')
   <li class="list-group-item d-flex align-items-center">
     <a href="{{ route('buyer.index') }}" class="mr-auto">{{ __('common.buyer_title') }}</a>

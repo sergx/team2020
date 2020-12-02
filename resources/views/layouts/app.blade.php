@@ -32,14 +32,35 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Left Side Of Navbar -->
-          <ul class="navbar-nav mr-auto">
-            {{--
+          <ul class="navbar-nav mr-auto ">
+            
             @auth
+            @hasanyrole('admin')
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('notification.index') }}">Уведомления</a>
+              <a class="nav-link" href="{{ route('user.index') }}">{{ __('common.user_title') }}</a>
             </li>
+            @endhasanyrole
+            @hasanyrole('page_renter|admin')
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('fastedit.show', auth()->user()->id)}}">Контакты и цены</a>
+            </li>
+            @endhasanyrole
+            @hasanyrole('agent|admin')
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('buyer.index') }}" class="mr-auto">{{ __('common.buyer_title') }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('seller.index') }}" class="mr-auto">{{ __('common.seller_title') }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('punktpriem.index') }}" class="mr-auto">{{ __('common.punktpriem_title') }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('deal.index') }}" class="mr-auto">{{ __('common.deal_title') }}</a>
+            </li>
+            @endhasanyrole
             @endauth
-            --}}
+            
           </ul>
 
           <!-- Right Side Of Navbar -->

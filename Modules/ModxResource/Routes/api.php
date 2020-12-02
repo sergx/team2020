@@ -16,11 +16,11 @@ Route::prefix('fastedit')->group(function() {
   $prefix = 'api.fastedit';
   $controllerName = 'ModxResourceController';
   //http://loc-team2020.test/api/fastedit/get-material-tree/
-  Route::any(    '/get-material-tree',           $controllerName.'@getMaterialTree')   ->name($prefix.'.getMaterialTree');
-  Route::any(    '/get-city-list',               $controllerName.'@getCityList')       ->name($prefix.'.getCityList');
-  Route::any(    '/update-field',                $controllerName.'@updateField')       ->name($prefix.'.updateField');
-  Route::any(    '/user-permission-get',         $controllerName.'@userPermissionGet')          ->name($prefix.'.userPermissionGet');
-  Route::any(    '/user-permission-update',      $controllerName.'@userPermissionUpdate')       ->name($prefix.'.userPermissionUpdate');
+  Route::post(    '/get-material-tree',           $controllerName.'@getMaterialTree')   ->name($prefix.'.getMaterialTree');
+  Route::post(    '/get-city-list',               $controllerName.'@getCityList')       ->name($prefix.'.getCityList');
+  Route::post(    '/update-field',                $controllerName.'@updateField')       ->name($prefix.'.updateField');
+  Route::post(    '/user-permission-get',         $controllerName.'@userPermissionGet')          ->name($prefix.'.userPermissionGet');
+  Route::post(    '/user-permission-update',      $controllerName.'@userPermissionUpdate')       ->name($prefix.'.userPermissionUpdate');
 
 
 
