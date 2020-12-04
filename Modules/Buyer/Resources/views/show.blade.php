@@ -33,10 +33,15 @@
         <strong>Потребность в материалах</strong><br>
         {{ $item->description_material }}
       </p>
-    @endif
+      @endif
     </div>
-
-    @include('inc.model-contacts', ['data' => $item->PersonContacts, 'title' => 'Контакты', 'model' => 'Buyer', 'model_id' => $item->id, 'removable' => true])
+    
+    @if (!$item->admin_verification)
+      @include('inc.model-contacts', ['data' => $item->PersonContacts, 'title' => 'Контакты', 'model' => 'Buyer', 'model_id' => $item->id, 'removable' => true])
+    @else
+      <h2>Контакты</h2>
+      <p>Для получения контактов требуется <strong>особое подтверждение</strong> у руководства.</p>
+    @endif
     @include('inc.model-files',    ['data' => $item->Files, 'title' => 'Файлы', 'model' => 'Buyer', 'model_id' => $item->id, 'removable' => true])
 
   </div>

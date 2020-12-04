@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Modules\Buyer\Entities\Buyer;
 use Modules\Buyer\Transformers\ApiTransform;
 
+use Illuminate\Support\Str;
 
 class BuyerController extends Controller
 {
@@ -30,11 +31,52 @@ class BuyerController extends Controller
   public function index()
   {
     //$org = Buyer::with(['productCategories', 'productCategories.products'])->where('id', $id)->first();
-    $items = Buyer::with(['Files'])->paginate(25);
+    $items = Buyer::with(['Files'])->paginate(125);
     if(\Request::is('api/*')){
       return ApiTransform::collection($items);
     }else{
-      return view('buyer::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
+      return view('buyer::index', ['items' => $items, 'q' => '', 'template_data' => $this->t_d(['template' => 'index'])]);
+    }
+  }
+
+  public function search(Request $request)
+  {
+    $q = $request->q;
+    if(empty($q)){
+      return redirect()->route('buyer.index');
+    }
+
+    $items = Buyer::with(['Files']);
+    $columns = ['name', 'description', 'description_material', 'place'];
+    foreach($columns as $column){
+      $items->orWhere($column, 'LIKE', '%' . $q . '%');
+    }
+    $items = $items->paginate(99999);
+
+    $open_tag = "<span style='background-color:#ffde19'>";
+    $close_tag = "</span>";
+
+    function mb_substr_replace($original, $replacement, $position, $length)
+    {
+      $startString = mb_substr($original, 0, $position, "UTF-8");
+      $endString = mb_substr($original, $position + $length, mb_strlen($original), "UTF-8");
+      $out = $startString . $replacement . $endString;
+      return $out;
+    }
+
+    foreach($items as $k => $item){
+      foreach($columns as $column){
+        if(mb_stripos($item->$column, $q) !== false){
+          $new_str = mb_substr_replace($item->$column, $open_tag, mb_stripos($item->$column, $q), 0);
+          $item->$column = mb_substr_replace($new_str, $close_tag, mb_stripos($new_str, $q) + Str::length($q), 0);
+        }
+      }
+    }
+
+    if(\Request::is('api/*')){
+      return ApiTransform::collection($items);
+    }else{
+      return view('buyer::index', ['items' => $items, 'q' => $q, 'template_data' => $this->t_d(['template' => 'index'])]);
     }
   }
 

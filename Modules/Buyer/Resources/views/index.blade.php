@@ -8,6 +8,15 @@
 
   @section('content_with-sidebar')
   @if(count($items) > 0)
+
+  
+  {{ Form::open(['route' => [$template_data['module'].'.search'], 'method' => 'GET', 'enctype' => 'multipart/form-data', 'class' => 'form-inline']) }}
+    <div class="form-group mb-2 mr-2">
+      {{Form::text('q', $q, ['class' => 'form-control','placeholder' => 'Поиск по всем полям'])}}
+    </div>
+    {{Form::submit('Найти', ['class' => 'btn btn-primary mb-2'])}}
+  {!! Form::close() !!}
+
   <div class="table-responsive mb-3">
     <table class="table">
       <thead>
@@ -21,15 +30,14 @@
       <tbody>
         @foreach ($items as $item)
         <tr>
-          <td><a href="{{route($template_data['module'].'.show', $item->id)}}">{{$item->name}}</a></td>
-          <td>{{$item->place}}</td>
+          <td><a href="{{route($template_data['module'].'.show', $item->id)}}">{!! $item->name !!}</a></td>
+          <td>{!! $item->place !!}</td>
           <td>
-            {!!$item->description!!}
+            {!! $item->description !!}
             @if(!empty($item->description) && !empty($item->description_material))
               <br>
             @endif
-            {!!$item->description_material!!}
-
+            {!! $item->description_material !!}
           </td>
           <td>{{$item->has_contract ? 'Есть': '—'}}</td>
         </tr>
