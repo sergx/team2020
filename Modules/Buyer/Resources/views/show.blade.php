@@ -36,7 +36,7 @@
       @endif
     </div>
     
-    @if (!$item->admin_verification)
+    @if (!$item->admin_verification || auth()->user()->can('admin only'))
       @include('inc.model-contacts', ['data' => $item->PersonContacts, 'title' => 'Контакты', 'model' => 'Buyer', 'model_id' => $item->id, 'removable' => true])
     @else
       <h2>Контакты</h2>
