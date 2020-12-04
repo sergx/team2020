@@ -45,13 +45,17 @@ class BuyerController extends Controller
     if(empty($q)){
       return redirect()->route('buyer.index');
     }
-
+    
     $items = Buyer::with(['Files']);
     $columns = ['name', 'description', 'description_material', 'place'];
     foreach($columns as $column){
       $items->orWhere($column, 'LIKE', '%' . $q . '%');
     }
     $items = $items->paginate(99999);
+    if(!count($items)){
+      return redirect()->route('buyer.index')->with('error', "По запросу <strong>".$q."</strong> ничего не найдено");
+    }
+
 
     $open_tag = "<span style='background-color:#ffde19'>";
     $close_tag = "</span>";
