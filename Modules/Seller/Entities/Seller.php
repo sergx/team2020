@@ -10,7 +10,6 @@ class Seller extends Model
     'name',
     'place',
     'description',
-    'description_material',
     'has_contract',
   ];
 

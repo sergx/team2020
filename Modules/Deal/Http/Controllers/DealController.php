@@ -5,6 +5,7 @@ namespace Modules\Deal\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 
 use Modules\Deal\Entities\Deal;
 use Modules\Buyer\Entities\Buyer;
@@ -15,6 +16,8 @@ use Modules\MaterialSklad\Entities\MaterialSklad;
 use App\User;
 
 use Modules\Notification\Entities\Notification;
+
+use Illuminate\Support\Str;
 
 class DealController extends Controller
 {
@@ -55,6 +58,60 @@ class DealController extends Controller
     $items = Deal::orderBy('id', 'desc')->paginate(30);
     //dd($items);
     return view('deal::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
+  }
+
+  public function search(Request $request)
+  {
+    $q = $request->q;
+    if(empty($q)){
+      return redirect()->route('deal.index');
+    }
+    
+    $items = Deal::with(['MaterialRezerv', 'MaterialSklad', 'Buyer', 'Seller', 'User'])->orderBy('id', 'desc');
+    $items->where('created_at', 'LIKE', '%'.$q.'%');
+    $items->orwhereHas('buyer', function (Builder $query) use ($q){
+      $query->where('name', 'like', '%'.$q.'%');
+    });
+    $items->orWhereHas('seller', function (Builder $query) use ($q){
+      $query->where('name', 'like', '%'.$q.'%');
+    });
+    $items->orWhereHas('MaterialRezerv', function (Builder $query) use ($q){
+      $query->where('name', 'like', '%'.$q.'%');
+    });
+    $items->orWhereHas('MaterialSklad', function (Builder $query) use ($q){
+      $query->where('name', 'like', '%'.$q.'%');
+    });
+    $items->orWhereHas('User', function (Builder $query) use ($q){
+      $query->where('name', 'like', '%'.$q.'%');
+    });
+    $items = $items->paginate(99999);
+    if(!count($items)){
+      return redirect()->route('deal.index')->with('error', "По запросу <strong>".$q."</strong> ничего не найдено");
+    }
+
+    //$items = $this->searchHighlight($items, $q, $columns);
+
+    return view('deal::index', ['items' => $items, 'q' => $q, 'template_data' => $this->t_d(['template' => 'index'])]);
+  }
+  
+  // public function searchHighlight($items, $q, $columns){   
+  //   foreach($items as $k => $item){
+  //     foreach($columns as $column){
+  //       if(mb_stripos($item->$column, $q) !== false){
+  //         $item->$column = $this->searchHighlightString($item->$column, $q);
+  //       }
+  //     }
+  //   }
+  //   return $items;
+  // }
+
+  public function searchHighlightString($string, $q){
+    $open_tag = "<span style='background-color:#ffde19'>";
+    $close_tag = "</span>";
+
+    $new_str = \mb_substr_replace($string, $open_tag, mb_stripos($string, $q), 0);
+    $string = \mb_substr_replace($new_str, $close_tag, mb_stripos($new_str, $q) + Str::length($q), 0);
+    return $string;
   }
 
   /**

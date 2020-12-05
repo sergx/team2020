@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Modules\MaterialRezerv\Entities\MaterialRezerv;
 use Modules\Seller\Entities\Seller;
 
+use Illuminate\Support\Str;
+
 class MaterialRezervController extends Controller
 {
   public $template_data = ['module' => 'materialrezerv'];
@@ -123,6 +125,42 @@ class MaterialRezervController extends Controller
     return redirect('materialrezerv/')->with('success', __('common.materialrezerv_deleted'));
   }
 
+  public function search(Request $request)
+  {
+    $q = $request->q;
+    if(empty($q)){
+      return redirect()->route('materialrezerv.index');
+    }
+    
+    $items = Materialrezerv::with(['Files']);
+    $columns = ['name', 'place', 'description'];
+    foreach($columns as $column){
+      $items->orWhere($column, 'LIKE', '%' . $q . '%');
+    }
+    $items = $items->paginate(99999);
+    if(!count($items)){
+      return redirect()->route('materialrezerv.index')->with('error', "По запросу <strong>".$q."</strong> ничего не найдено");
+    }
+
+    $items = $this->searchHighlight($items, $q, $columns);
+
+    return view('materialrezerv::index', ['items' => $items, 'q' => $q, 'template_data' => $this->t_d(['template' => 'index'])]);
+  }
+
+  public function searchHighlight($items, $q, $columns){
+    $open_tag = "<span style='background-color:#ffde19'>";
+    $close_tag = "</span>";
+
+    foreach($items as $k => $item){
+      foreach($columns as $column){
+        if(mb_stripos($item->$column, $q) !== false){
+          $new_str = \mb_substr_replace($item->$column, $open_tag, mb_stripos($item->$column, $q), 0);
+          $item->$column = \mb_substr_replace($new_str, $close_tag, mb_stripos($new_str, $q) + Str::length($q), 0);
+        }
+      }
+    }
+    return $items;
+  }
 
   /**
    * @param array $data

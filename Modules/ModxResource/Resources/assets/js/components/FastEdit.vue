@@ -192,7 +192,8 @@
         return !!this.materials_selected.length;
       },
     },
-    mounted(){     
+    mounted(){
+
       if(this.$route.name == "FastEditUserPermission"){
         this.$root.ajax_basic({userPermissions: []}, this.url.materials_tree_list).then(response => {
           this.materials_tree_list = response.data.data;
@@ -209,12 +210,12 @@
     },
     methods:{
       loadData_FastEdit: function(){
-        //this.materials_selected_ids = this.materials_selected.map(material => material.id);
         return this.$root.ajax_basic({user_id:parseInt(this.$route.params.user_id)}, this.url.user_permission_get).then(response => {
           let userPermissions = response.data;
+          if(!userPermissions.length){
+            return this.error_redirect();
+          }
           return this.$root.ajax_basic({userPermissions: userPermissions}, this.url.materials_tree_list).then(response => {
-            console.log(response.data);
-            //return;
             this.materials_tree_list = response.data.data;
             return this.getCityList(userPermissions).then(() => {
               this.userPermissionGet(userPermissions);
@@ -362,6 +363,9 @@
             //console.log(response.data);
         });
       },
+      error_redirect: function(){
+        window.location.href = window.location.origin + '/fastedit/not-found';
+      }
       // reSelectMaterials: function(){
       //   // Почему-то не признает он эти материалы. Почем-то они реактивные..
       //   if(this.materials_selected_ids.length){

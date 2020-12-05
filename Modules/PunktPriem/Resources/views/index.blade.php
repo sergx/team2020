@@ -8,6 +8,8 @@
 @section('content_with-sidebar')
   @if(count($items) > 0)
 
+  @include('inc.search-form', ['route' => [$template_data['module'].'.search'], 'q' => !empty($q) ? $q : ''])
+  
   <div class="table-responsive mb-3">
     <table class="table">
       <thead>
@@ -21,9 +23,9 @@
       <tbody>
         @foreach ($items as $item)
         <tr>
-          <td><a href="{{route($template_data['module'].'.show', $item->id)}}">{{$item->name}}</a></td>
-          <td>{{$item->address}}</td>
-          <td>{{$item->description}}</td>
+          <td><a href="{{route($template_data['module'].'.show', $item->id)}}">{!!$item->name!!}</a></td>
+          <td>{!!$item->address!!}</td>
+          <td>{!!$item->description!!}</td>
           <td>{{$item->has_contract ? 'Есть': '—'}}</td>
         </tr>
         @endforeach

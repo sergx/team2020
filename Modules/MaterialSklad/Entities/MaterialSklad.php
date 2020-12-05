@@ -13,7 +13,6 @@ class MaterialSklad extends Model
     'place',
     'volume',
     'seller_id',
-    'comment',
   ];
 
   protected $table = 'team_materials_sklad';

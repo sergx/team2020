@@ -103,6 +103,7 @@ class ModxResourceController extends Controller
     if(\Request::is('api/*')){
       return json_encode($data_to_return);
     }
+    return $data_to_return;
   }
 
   public function userPermissionUpdate(Request $request){
@@ -124,20 +125,6 @@ class ModxResourceController extends Controller
 
   public function clearModxCache(){
     \File::deleteDirectory($_SERVER['DOCUMENT_ROOT'].'/../ccoorree/cache/aa_set_paceholders');
-    // if (is_dir($dir)) {
-    //   $objects = scandir($dir);
-    //   foreach ($objects as $object) {
-    //     if ($object != "." && $object != "..") {
-    //       if (filetype($dir . "/" . $object) == "dir") {
-    //         $this->clearModxCache($dir . "/" . $object);
-    //       } else {
-    //         unlink($dir . "/" . $object);
-    //       }
-    //     }
-    //   }
-    //   reset($objects);
-    //   rmdir($dir);
-    // }
   }
 
   public function updateField(Request $request)
@@ -229,10 +216,9 @@ class ModxResourceController extends Controller
     return view('modxresource::index');
   }
 
-  public function show($id)
+  public function show(Request $request)
   {
-    //$data = ModxResource::with(['tv','children'])->find($id);
-    //$data = $data->children;
+    //dd($this->userPermissionGet($request));
     return view('modxresource::show');
   }
   

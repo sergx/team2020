@@ -35,7 +35,7 @@ class BuyerController extends Controller
     if(\Request::is('api/*')){
       return ApiTransform::collection($items);
     }else{
-      return view('buyer::index', ['items' => $items, 'q' => '', 'template_data' => $this->t_d(['template' => 'index'])]);
+      return view('buyer::index', ['items' => $items, 'template_data' => $this->t_d(['template' => 'index'])]);
     }
   }
 
@@ -56,32 +56,28 @@ class BuyerController extends Controller
       return redirect()->route('buyer.index')->with('error', "По запросу <strong>".$q."</strong> ничего не найдено");
     }
 
-
-    $open_tag = "<span style='background-color:#ffde19'>";
-    $close_tag = "</span>";
-
-    function mb_substr_replace($original, $replacement, $position, $length)
-    {
-      $startString = mb_substr($original, 0, $position, "UTF-8");
-      $endString = mb_substr($original, $position + $length, mb_strlen($original), "UTF-8");
-      $out = $startString . $replacement . $endString;
-      return $out;
-    }
-
-    foreach($items as $k => $item){
-      foreach($columns as $column){
-        if(mb_stripos($item->$column, $q) !== false){
-          $new_str = mb_substr_replace($item->$column, $open_tag, mb_stripos($item->$column, $q), 0);
-          $item->$column = mb_substr_replace($new_str, $close_tag, mb_stripos($new_str, $q) + Str::length($q), 0);
-        }
-      }
-    }
+    $items = $this->searchHighlight($items, $q, $columns);
 
     if(\Request::is('api/*')){
       return ApiTransform::collection($items);
     }else{
       return view('buyer::index', ['items' => $items, 'q' => $q, 'template_data' => $this->t_d(['template' => 'index'])]);
     }
+  }
+
+  public function searchHighlight($items, $q, $columns){
+    $open_tag = "<span style='background-color:#ffde19'>";
+    $close_tag = "</span>";
+
+    foreach($items as $k => $item){
+      foreach($columns as $column){
+        if(mb_stripos($item->$column, $q) !== false){
+          $new_str = \mb_substr_replace($item->$column, $open_tag, mb_stripos($item->$column, $q), 0);
+          $item->$column = \mb_substr_replace($new_str, $close_tag, mb_stripos($new_str, $q) + Str::length($q), 0);
+        }
+      }
+    }
+    return $items;
   }
 
   /**

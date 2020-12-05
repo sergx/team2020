@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Modules\MaterialSklad\Entities\MaterialSklad;
 use Modules\Seller\Entities\Seller;
 
+use Illuminate\Support\Str;
+
 class MaterialSkladController extends Controller
 {
   public $template_data = ['module' => 'materialsklad'];
@@ -136,5 +138,42 @@ class MaterialSkladController extends Controller
   public function t_d($data)
   {
     return array_merge($this->template_data, $data);
+  }
+
+  public function search(Request $request)
+  {
+    $q = $request->q;
+    if(empty($q)){
+      return redirect()->route('materialsklad.index');
+    }
+    
+    $items = Materialsklad::with(['Files']);
+    $columns = ['name', 'description', 'place', 'contacts'];
+    foreach($columns as $column){
+      $items->orWhere($column, 'LIKE', '%' . $q . '%');
+    }
+    $items = $items->paginate(99999);
+    if(!count($items)){
+      return redirect()->route('materialsklad.index')->with('error', "По запросу <strong>".$q."</strong> ничего не найдено");
+    }
+
+    $items = $this->searchHighlight($items, $q, $columns);
+
+    return view('materialsklad::index', ['items' => $items, 'q' => $q, 'template_data' => $this->t_d(['template' => 'index'])]);
+  }
+
+  public function searchHighlight($items, $q, $columns){
+    $open_tag = "<span style='background-color:#ffde19'>";
+    $close_tag = "</span>";
+
+    foreach($items as $k => $item){
+      foreach($columns as $column){
+        if(mb_stripos($item->$column, $q) !== false){
+          $new_str = \mb_substr_replace($item->$column, $open_tag, mb_stripos($item->$column, $q), 0);
+          $item->$column = \mb_substr_replace($new_str, $close_tag, mb_stripos($new_str, $q) + Str::length($q), 0);
+        }
+      }
+    }
+    return $items;
   }
 }
