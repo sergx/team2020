@@ -212,8 +212,9 @@
       loadData_FastEdit: function(){
         return this.$root.ajax_basic({user_id:parseInt(this.$route.params.user_id)}, this.url.user_permission_get).then(response => {
           let userPermissions = response.data;
-          if(!userPermissions.length){
-            return this.error_redirect();
+          if(!Object.keys(userPermissions).length){
+           //return this.error_redirect();
+           alert("Нет прав для редактирования. \r\n(Адрес страницы — "+window.location.pathname+")");
           }
           return this.$root.ajax_basic({userPermissions: userPermissions}, this.url.materials_tree_list).then(response => {
             this.materials_tree_list = response.data.data;

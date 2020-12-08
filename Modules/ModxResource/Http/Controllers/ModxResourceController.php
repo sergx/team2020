@@ -223,15 +223,15 @@ class ModxResourceController extends Controller
   }
   
   public function get_user_id($request){
-    if(auth()->user()->hasRole('admin')){
-      if(empty($request->user_id)){
-        $data = $request->json()->all();
-        $user_id = $data['user_id'];
-      }else{
-        $user_id = $request->user_id;
-      }
+    if(empty($request->user_id)){
+      $data = $request->json()->all();
+      $user_id = $data['user_id'];
     }else{
-      $user_id = auth()->user()->id;
+      $user_id = $request->user_id;
+    }
+
+    if(!auth()->user()->hasRole('admin') && $user_id != auth()->user()->id){
+      return 0;
     }
     return $user_id;
   }
