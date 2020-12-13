@@ -124,7 +124,8 @@ class ModxResourceController extends Controller
   }
 
   public function clearModxCache(){
-    \File::deleteDirectory($_SERVER['DOCUMENT_ROOT'].'/../ccoorree/cache/aa_set_paceholders');
+    \File::deleteDirectory('/home/h901102646/scraptraffic.com/ccoorree/cache/aa_set_paceholders');
+    // \File::deleteDirectory($_SERVER['DOCUMENT_ROOT'].'/../ccoorree/cache/aa_set_paceholders');
   }
 
   public function updateField(Request $request)
