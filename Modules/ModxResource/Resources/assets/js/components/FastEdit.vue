@@ -29,7 +29,7 @@
     <div v-if="cites_selected.length">
       <h2 class="mt-4 mb-3">Доступные города</h2>
 
-      <div class="btn-group btn-group-toggle">
+      <div class="btn-group btn-group-toggle" style="flex-wrap:wrap;">
         <checkbox-radio-item
           v-for="(city, index) in cites_selected"
           :key="index"
@@ -343,6 +343,7 @@
             }),
           this.url.update_field).then(response => {
             // Обработка ошибок!
+            // Если истекла сессия...
             this.materials_selected.filter(material => {
               if(data.material_ids.indexOf(material.id) !== -1){
                 return true;

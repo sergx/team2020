@@ -209,7 +209,7 @@
         this.show_children = !this.show_children;
       },
       updateField: function(val, type){
-        console.log("val: "+ val);
+        //console.log("val: "+ val);
         let data;
         if(typeof type === "undefined" && typeof val !== "string"){
           data = val;

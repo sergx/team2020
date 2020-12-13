@@ -138,6 +138,7 @@ class ModxResourceController extends Controller
     if(empty($data['material_ids'])){
       return response()->json(['message' => 'Не указан материал'], 422);
     }
+
     $user_id = $this->get_user_id($request);
     $UserResourses = UserResourses::select(['city_id','material_id'])
     ->where(["user_id" => $user_id, "city_id" => $data['city_id']])
@@ -157,59 +158,50 @@ class ModxResourceController extends Controller
       }
     }
 
+    $tmplvarids = [
+      'phone' => 26,
+      'email' => 27,
+      'material_price' => 29,
+    ];
 
-    if(!empty($data['city_id']) && count($data['material_ids'])){
-      switch($data['type']){
-        case "phone":
-          //DB::enableQueryLog();
-          $affected = DB::table('quzat_site_tmplvar_contentvalues')
-          ->where("tmplvarid", 26)
-          ->whereIn("contentid", function ($query) use ($data) {
-            $query->select("id")
-            ->from('quzat_site_content')
-            ->where("st_city_id", $data['city_id'])
-            ->whereIn("st_material_id", $data['material_ids']);
-          })
-          ->update(['value' => $data['value']]);
-          //var_dump($result);
-          //print_r(DB::getQueryLog());
-          //return;
-        break;
-        case "email":
-          $affected = DB::table('quzat_site_tmplvar_contentvalues')
-          ->where("tmplvarid", 27)
-          ->whereIn("contentid", function ($query) use ($data) {
-            $query->select("id")
-            ->from('quzat_site_content')
-            ->where("st_city_id", $data['city_id'])
-            ->whereIn("st_material_id", $data['material_ids']);
-          })
-          ->update(['value' => $data['value']]);
-        break;
-        case "material_price":
-          $affected = DB::table('quzat_site_tmplvar_contentvalues')
-          ->where("tmplvarid", 29)
-          ->whereIn("contentid", function ($query) use ($data) {
-            $query->select("id")
-            ->from('quzat_site_content')
-            ->where("st_city_id", $data['city_id'])
-            ->whereIn("st_material_id", $data['material_ids']);
-          })
-          ->update(['value' => $data['value']]);
-  
-          $affected = DB::table('quzat_site_content')
-          ->where("template", 12)
-          ->where("st_city_id", $data['city_id'])
-          ->whereIn("st_material_id", $data['material_ids'])
-          ->update(['st_material_price' => $data['value']]);
-        break;
+    if(!empty($data['city_id']) && count($data['material_ids']) && !empty($tmplvarids[ $data['type'] ])){
+
+      foreach($data['material_ids'] as $material_id){
+        $contentid = DB::table('quzat_site_content')
+        ->where("st_city_id", $data['city_id'])
+        ->where("st_material_id", $material_id)
+        ->pluck('id');
+
+        $contentid = $contentid[0];
+        // var_dump($contentid);
+        // die;
+        //DB::enableQueryLog();
+        $query = DB::table('quzat_site_tmplvar_contentvalues')
+        ->updateOrInsert(
+          [ 'tmplvarid' => $tmplvarids[ $data['type'] ],
+            'contentid' => $contentid
+          ],
+          [ 'value' => $data['value'] ]
+        );
+        //print_r(DB::getQueryLog());
+        
+        //print_r($query);
+        //die;
+      }
+
+      if($data['type'] == 'material_price'){
+        DB::table('quzat_site_content')
+        ->where("template", 12)
+        ->where("st_city_id", $data['city_id'])
+        ->whereIn("st_material_id", $data['material_ids'])
+        ->update(['st_material_price' => $data['value']]);
       }
       $this->clearModxCache();
     }else{
       return response()->json(['message' => 'Указанные материалы были отклонены, т.к. не доступны для данного пользователя'], 422);
     }
     if(\Request::is('api/*')){
-      return new ApiTransform(array_merge($request->json()->all(), ['affected' => $affected]));
+      return new ApiTransform(array_merge($request->json()->all(), []));
     }
   }
 
