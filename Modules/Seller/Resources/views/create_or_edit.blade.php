@@ -6,7 +6,10 @@
       ]])
 
     @if (isset($item))
-      <h1>Редактировать <a href="{{route('seller.show', $item->id)}}">продавца</a></h1>
+      <h1>
+        Редактировать <a href="{{route('seller.show', $item->id)}}">продавца</a>
+        @include('inc.pre-deleted-badge')
+      </h1>
       {{ Form::model($item, ['route' => [$template_data['module'].'.update', $item->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) }}
       {{Form::hidden('_method', 'PUT')}}
     @else

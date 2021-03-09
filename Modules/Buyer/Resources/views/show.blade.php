@@ -13,6 +13,9 @@
   <div class="card-header d-flex justify-content-between align-items-center">
     <h1 class="h2 mb-0">
       {{$item->name}}
+      @if(!empty($item->pre_deleted) && auth()->user()->hasAnyPermission(['delete any '.$template_data['module'],'pre_delete any '.$template_data['module']]))
+      <span class="badge badge-warning">pre deleted</span>
+      @endif
     </h1>
     @if ($item->has_contract)
     <span class="badge badge-success">Договор есть</span>

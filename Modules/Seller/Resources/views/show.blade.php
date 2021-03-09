@@ -13,6 +13,7 @@
   <div class="card-header d-flex justify-content-between align-items-center">
     <h1 class="h2 mb-0">
       {{$item->name}}
+      @include('inc.pre-deleted-badge')
     </h1>
     @if ($item->has_contract)
     <span class="badge badge-success">Договор есть</span>
