@@ -17,7 +17,7 @@
           <th scope="col">Материал</th>
           <th scope="col">Кол-во</th>
           <th scope="col">Местоположение</th>
-          <th scope="col">Контакты</th>
+          {{--<th scope="col">Контакты</th>--}}
           <th scope="col">Комментарий</th>
         </tr>
       </thead>
@@ -27,7 +27,7 @@
           <td><a href="{{route($template_data['module'].'.show', $item->id)}}">{!!$item->name!!}</a></td>
           <td>{!!$item->volume!!}</td>
           <td>{!!$item->place!!}</td>
-          <td>{!!$item->contacts!!}</td>
+          {{--<td>{!!$item->contacts!!}</td>--}}
           <td>{!!$item->description!!}</td>
         </tr>
         @endforeach
