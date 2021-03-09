@@ -51,7 +51,7 @@ class MaterialSkladController extends Controller
     $this->validate($request, [
       'name' => 'required',
       'volume' => 'required',
-      'seller_id' => 'required',
+      //'seller_id' => 'required',
     ]);
 
     $item = new MaterialSklad;
