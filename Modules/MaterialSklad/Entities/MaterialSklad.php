@@ -12,6 +12,7 @@ class MaterialSklad extends Model
     'description',
     'place',
     'volume',
+    'contacts',
     'seller_id',
   ];
 
