@@ -14,8 +14,6 @@
       {!! Form::open(['route' => $template_data['module'].'.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
     @endif
 
-    {!! Form::open(['route' => [$template_data['module'].'.update', $item->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-    {{Form::hidden('_method', 'PUT')}}
     <div class="form-group">
       {{Form::label('name','Название')}}
       {{Form::text('name', old('name'), ['class' => 'form-control','placeholder' => 'Название'])}}
