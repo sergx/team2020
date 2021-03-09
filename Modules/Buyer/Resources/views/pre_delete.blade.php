@@ -2,14 +2,9 @@
 
 @section('head_content')
   @include('inc.breadcrumbs')
-  <h1>{{__("common.".$template_data['module']."_title")}} <a href="{{route($template_data['module'].'.create')}}" class="btn btn-sm btn-primary">+ Добавить</a></h1>
+  <h1>{{__("common.".$template_data['module']."_title")}} на удаление</h1>
 
-  @endsection
-
-  @section('content_with-sidebar')
   @if(count($items) > 0)
-  
-  @include('inc.pre-deleted-alert')
 
   @include('inc.search-form', ['route' => [$template_data['module'].'.search'], 'q' => !empty($q) ? $q : ''])
 
@@ -17,21 +12,23 @@
     <table class="table">
       <thead>
         <tr>
+          <th scope="col" class="text-nowrap">Оставить</th>
           <th scope="col" class="text-nowrap">Имя / Организация</th>
           <th scope="col" class="text-nowrap">Местоположение</th>
           <th scope="col" class="text-nowrap">Комментарий</th>
           <th scope="col" class="text-nowrap">Договор</th>
+          <th scope="col" class="text-nowrap">Удалить</th>
         </tr>
       </thead>
       <tbody>
         @foreach ($items as $item)
         <tr>
           <td>
-            @if(!empty($item->pre_deleted) && auth()->user()->hasAnyPermission(['delete any '.$template_data['module'],'pre_delete any '.$template_data['module']]))
-            <span class="badge badge-warning">pre deleted</span>
-            @endif
-            <a href="{{route($template_data['module'].'.show', $item->id)}}">{!! $item->name !!}</a>
+            {!! Form::open(['route' => [$template_data['module'].'.keep-alive', $item->id], 'method' => 'GET', 'enctype' => 'multipart/form-data']) !!}
+            {{Form::submit('Не удалять', ['class' => 'btn btn-sm btn-success'])}}
+            {!! Form::close() !!}
           </td>
+          <td><a href="{{route($template_data['module'].'.show', $item->id)}}">{!! $item->name !!}</a></td>
           <td>{!! $item->place !!}</td>
           <td>
             {!! $item->description !!}
@@ -41,6 +38,12 @@
             {!! $item->description_material !!}
           </td>
           <td>{{$item->has_contract ? 'Есть': '—'}}</td>
+          <td>
+            {!! Form::open(['route' => [$template_data['module'].'.destroy', $item->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+              {{Form::hidden('_method', 'DELETE')}}
+              {{Form::submit('Удалить', ['class' => 'btn btn-sm btn-danger'])}}
+            {!! Form::close() !!}
+          </td>
         </tr>
         @endforeach
       </tbody>
@@ -49,5 +52,10 @@
   {{$items->links()}}
   @endif
 
-
 @endsection
+
+@section('with_sidebar')
+  <!-- Убираем сайдбар -->
+@endsection
+
+

@@ -131,10 +131,6 @@ class SellerController extends Controller
     ]);
 
     $item = Seller::find($id);
-
-    if(auth()->user()->id !== $item->user_id){
-      return redirect()->route('home')->with('error', __('common.Unauthorized'));
-    }
     
     //$data_to_pass = is_null( request('has_contract') ) ? request()->except('has_contract') : request()->all(); // 
     $item->fill(request()->all());
@@ -151,13 +147,34 @@ class SellerController extends Controller
   public function destroy($id)
   {
     $item = Seller::find($id);
-    if(auth()->user()->id !== $item->user_id){
-      return redirect()->route('home')->with('error', __('common.Unauthorized'));
-    }
+
     $item->delete();
+    if(strpos(url()->previous(), "/pre-deleted")){
+      return redirect()->back();
+    }
     return redirect('seller/')->with('success', __('common.seller_deleted'));
   }
 
+  public function preDelete($id)
+  {
+    $item = Seller::find($id);
+    $item->pre_deleted = true;
+    $item->save();
+    return redirect()->back();
+  }
+
+  public function preDeletedList()
+  {
+    $items = Seller::where(['pre_deleted' => 1])->paginate(50);
+    return view('seller::pre_delete', ['items' => $items, 'template_data' => $this->t_d(['template' => 'pre_delete'])]);
+  }
+
+  public function keepAlive($id){
+    $item = Seller::find($id);
+    $item->pre_deleted = false;
+    $item->save();
+    return redirect()->back();
+  }
 
   /**
    * @param array $data

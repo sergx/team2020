@@ -30,7 +30,7 @@
               <a href="{{route('fastedit.show', $user->id)}}">Редактировать контакты и цены</a>
             </li>
             @endhasanyrole
-            @hasanyrole('agent|admin')
+            @hasanyrole('agent|admin|office_manager')
             <li class="list-group-item d-flex align-items-center">
               <a href="{{ route('buyer.index') }}" class="mr-auto">{{ __('common.buyer_title') }}</a>
               <a href="{{ route('buyer.create') }}" class="btn btn-sm btn-primary">+ {{ __('common.create') }}</a>
@@ -56,7 +56,7 @@
               <a href="{{ route('deal.create') }}" class="btn btn-sm btn-primary">+ {{ __('common.create') }}</a>
             </li>
             @endhasanyrole
-            @hasanyrole('agent|admin|page_renter')
+            @hasanyrole('agent|admin|page_renter|office_manager')
             @else
               Ваша учетная запись ожидает подтверждения
             @endhasanyrole

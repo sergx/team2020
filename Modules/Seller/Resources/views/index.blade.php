@@ -8,6 +8,8 @@
 @section('content_with-sidebar')
   @if(count($items) > 0)
 
+  @include('inc.pre-deleted-alert')
+
   @include('inc.search-form', ['route' => [$template_data['module'].'.search'], 'q' => !empty($q) ? $q : ''])
 
   <div class="table-responsive mb-3">
@@ -23,7 +25,12 @@
       <tbody>
         @foreach ($items as $item)
         <tr>
-          <td><a href="{{route($template_data['module'].'.show', $item->id)}}">{!!$item->name!!}</a></td>
+          <td>
+            @if(!empty($item->pre_deleted) && auth()->user()->hasAnyPermission(['delete any '.$template_data['module'],'pre_delete any '.$template_data['module']]))
+            <span class="badge badge-warning">pre deleted</span>
+            @endif
+            <a href="{{route($template_data['module'].'.show', $item->id)}}">{!!$item->name!!}</a>
+          </td>
           <td>{!!$item->place!!}</td>
           <td>{!!$item->description!!}</td>
           <td>{{$item->has_contract ? 'Есть': '—'}}</td>

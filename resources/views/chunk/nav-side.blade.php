@@ -9,10 +9,10 @@
   @endhasanyrole
   @hasanyrole('page_renter|admin')
   <li class="list-group-item d-flex align-items-center">
-    <a href="{{route('fastedit.show', auth()->user()->id)}}">Редактировать контакты и цены</a>
+    <a href="/fastedit/user_price/{{auth()->user()->id}}">Редактировать контакты и цены</a>
   </li>
   @endhasanyrole
-  @hasanyrole('agent|admin')
+  @hasanyrole('agent|admin|office_manager')
   <li class="list-group-item d-flex align-items-center">
     <a href="{{ route('buyer.index') }}" class="mr-auto">{{ __('common.buyer_title') }}</a>
     <a href="{{ route('buyer.create') }}" class="btn btn-sm btn-primary text-nowrap">+ {{-- __('common.create') --}}</a>

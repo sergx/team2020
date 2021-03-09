@@ -47,9 +47,9 @@
   </div>
 </div>
 
+@if(auth()->user()->hasAnyPermission(['edit any '.$template_data['module']]))
   <hr>
-
   <a href="{{route($template_data['module'].'.edit', $item['id'])}}" class="btn btn-primary">Редактировать</a>
-
+@endif
  
 @endsection

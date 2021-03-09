@@ -24,10 +24,6 @@ class BuyerController extends Controller
     $this->middleware('auth'/*, ['except' => ['index','show']] */);
   }
 
-  /**
-   * Display a listing of the resource.
-   * @return Response
-   */
   public function index()
   {
     //$org = Buyer::with(['productCategories', 'productCategories.products'])->where('id', $id)->first();
@@ -157,10 +153,6 @@ class BuyerController extends Controller
 
     $item = Buyer::find($id);
 
-    if(auth()->user()->id !== $item->user_id){
-      return redirect()->route('home')->with('error', __('common.Unauthorized'));
-    }
-
     $item->fill($request->all());
     $item->save();
     if(\Request::is('api/*')){
@@ -179,17 +171,37 @@ class BuyerController extends Controller
   public function destroy($id)
   {
     $item = Buyer::find($id);
-    
-    if(auth()->user()->id !== $item->user_id){
-      return redirect()->route('home')->with('error', __('common.Unauthorized'));
-    }
 
     $item->delete();
+    if(strpos(url()->previous(), "/pre-deleted")){
+      return redirect()->back();
+    }
     if(\Request::is('api/*')){
       return new ApiTransform($item);
     }else{
       return redirect('buyer/')->with('success', __('common.buyer_deleted'));
     }
+  }
+
+  public function preDelete($id)
+  {
+    $item = Buyer::find($id);
+    $item->pre_deleted = true;
+    $item->save();
+    return redirect()->back();
+  }
+
+  public function preDeletedList()
+  {
+    $items = Buyer::where(['pre_deleted' => 1])->paginate(50);
+    return view('buyer::pre_delete', ['items' => $items, 'template_data' => $this->t_d(['template' => 'pre_delete'])]);
+  }
+
+  public function keepAlive($id){
+    $item = Buyer::find($id);
+    $item->pre_deleted = false;
+    $item->save();
+    return redirect()->back();
   }
 
   /**

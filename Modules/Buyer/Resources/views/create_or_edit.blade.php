@@ -65,11 +65,7 @@
     {{Form::submit('Сохранить', ['class' => 'btn btn-primary'])}}
     {!! Form::close() !!}
     @if (isset($item))
-    <hr>
-      {!! Form::open(['route' => [$template_data['module'].'.destroy', $item->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-      {{Form::hidden('_method', 'DELETE')}}
-      {{Form::submit('Удалить', ['class' => 'btn btn-danger'])}}
-      {!! Form::close() !!}
+      @include('inc.pre-delete-button-on-edit')
     @endif
   </div>
 @endsection

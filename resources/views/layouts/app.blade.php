@@ -42,10 +42,10 @@
             @endhasanyrole
             @hasanyrole('page_renter|admin')
             <li class="nav-item">
-              <a class="nav-link" href="{{route('fastedit.show', auth()->user()->id)}}">Контакты и цены</a>
+              <a class="nav-link" href="/fastedit/user_price/{{auth()->user()->id}}">Контакты и цены</a>
             </li>
             @endhasanyrole
-            @hasanyrole('agent|admin')
+            @hasanyrole('agent|admin|office_manager')
             <li class="nav-item">
               <a class="nav-link" href="{{ route('buyer.index') }}" class="mr-auto">{{ __('common.buyer_title') }}</a>
             </li>

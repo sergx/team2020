@@ -64,7 +64,9 @@ return [
 
   'role_admin' => 'Админ (аналитик)',
   'role_agent' => 'Агент',
+  'role_punkt_priema' => 'Пункт приема (партнер)',
   'role_page_renter' => 'Арендатор страниц',
+  'role_office_manager' => 'Менеджер (офис)',
 
   'notification_title' => 'Уведомления',
 
