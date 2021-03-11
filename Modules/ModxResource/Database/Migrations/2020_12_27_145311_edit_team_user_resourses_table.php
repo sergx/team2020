@@ -16,7 +16,6 @@ class EditTeamUserResoursesTable extends Migration
     //
     Schema::table('team_user_resourses', function (Blueprint $table) {
       $table->bigInteger('unic_id')->nullable()->unsigned();
-      $table->bigInteger('user_id')->nullable()->unsigned()->change();
     });
   }
 
