@@ -8,8 +8,9 @@ import notFound404  from './components/notFound404';
 export default new VueRouter({
   mode: "history",
   routes: [
-    {path: '/fastedit/:user_id(\\d+)', component: FastEdit, name: 'FastEdit',},
-    {path: '/fastedit/user_permission/:user_id(\\d+)', component: FastEdit, name: 'FastEditUserPermission'},
+    {path: '/fastedit/user_price/:id(\\d+)', component: FastEdit, name: 'FastEditUserPrice'},
+    {path: '/fastedit/user_permission/:id(\\d+)', component: FastEdit, name: 'FastEditUserPermission'},
+    {path: '/fastedit/punktpriem_permission/:id(\\d+)', component: FastEdit, name: 'FastEditPunktPriemPermission'},
     {path: '*', component: notFound404, name: 'notFound404'},
     //{path: '/buyer', component: ModuleBuyerIndex},
   ],

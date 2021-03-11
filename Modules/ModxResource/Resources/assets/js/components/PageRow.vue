@@ -6,23 +6,23 @@
           <span v-if="!show_children">+</span>
           <span v-if="show_children">–</span>
         </div>
-        <label><input :disabled="$route.name == 'FastEdit' && !is_this_approved" type="checkbox" v-model="m_model" :value="m_val" @change="toggleChildren"></label>
+        <label><input :disabled="$route.name == 'FastEditUserPrice' && !is_this_approved" type="checkbox" v-model="m_model" :value="m_val" @change="toggleChildren"></label>
         <!--<button @click="toggleChildren" v-if="has_chidren">tc</button>-->
         {{page.menutitle}}
       </div>
-      <div class="td_price input-group" v-if="$route.name == 'FastEdit' && is_this_approved">
+      <div class="td_price input-group" v-if="$route.name == 'FastEditUserPrice' && is_this_approved">
         <input type="text" :disabled="is_materials_selected" @input="material_price_old = true" v-model="material_price" :placeholder="base_material_price" @keyup.enter="updateField(material_price, 'material_price')" class="form-control">
         <div class="input-group-append" v-if="!is_materials_selected && material_price_old">
           <button class="btn btn-primary" @click="updateField(material_price, 'material_price')">Ок</button>
         </div>
       </div>
-      <div class="td_phone input-group" v-if="$route.name == 'FastEdit' && is_this_approved">
+      <div class="td_phone input-group" v-if="$route.name == 'FastEditUserPrice' && is_this_approved">
         <input type="text" :disabled="is_materials_selected" @input="phone_old = true" v-model="phone" placeholder="Телефон" @keyup.enter="updateField(phone, 'phone')" class="form-control">
         <div class="input-group-append" v-if="!is_materials_selected && phone_old">
           <button class="btn btn-primary" @click="updateField(phone, 'phone')">Ок</button>
         </div>
       </div>
-      <div class="td_email input-group" v-if="$route.name == 'FastEdit' && is_this_approved && email !== false">
+      <div class="td_email input-group" v-if="$route.name == 'FastEditUserPrice' && is_this_approved && email !== false">
         <input type="text" :disabled="is_materials_selected" @input="email_old = true" v-model="email" placeholder="Email" @keyup.enter="updateField(email, 'email')" class="form-control">
         <div class="input-group-append" v-if="!is_materials_selected && email_old">
           <button class="btn btn-primary" @click="updateField(email, 'email')">Ок</button>
@@ -65,9 +65,8 @@
       classArray:function(){
         let result = [];
         result.push('level'+this.level);
-        if(!this.is_this_approved && this.$route.name == 'FastEdit'){
+        if(!this.is_this_approved && this.$route.name == 'FastEditUserPrice'){
           result.push('isnot_approved');
-        }else{
         }
         if(this.has_chidren){
           result.push('has_chidren');

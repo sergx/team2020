@@ -7,8 +7,10 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 use Modules\PunktPriem\Entities\PunktPriem;
+use Modules\ModxResource\Entities\ModxResource;
 
 use Illuminate\Support\Str;
+use App\User;
 
 class PunktPriemController extends Controller
 {
@@ -35,7 +37,9 @@ class PunktPriemController extends Controller
     */
   public function create()
   {
-    return view('punktpriem::create_or_edit', ['template_data' => $this->t_d(['template' => 'create']) ]);
+    $cites = ModxResource::where(["template" => 9])->get()->pluck("menutitle","id");;
+    $users = User::get()->pluck("name","id");
+    return view('punktpriem::create_or_edit', ['cites' => $cites, 'users' => $users, 'template_data' => $this->t_d(['template' => 'create']) ]);
   }
 
   /**
@@ -47,8 +51,10 @@ class PunktPriemController extends Controller
   {
     $this->validate($request, [
       'name' => 'required',
+      'city_id' => 'required',
+      'address' => 'required',
     ]);
-
+    //dd($request->all());
     $item = new PunktPriem;
     $item->fill($request->all());
     $item->user_id = auth()->user()->id;
@@ -76,7 +82,9 @@ class PunktPriemController extends Controller
   public function edit($id)
   {
     $item = PunktPriem::find($id);
-    return view('punktpriem::create_or_edit', ['item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
+    $cites = ModxResource::where(["template" => 9])->get()->pluck("menutitle","id");
+    $users = User::get()->pluck("name","id");
+    return view('punktpriem::create_or_edit', ['cites' => $cites, 'users' => $users, 'item' => $item, 'template_data' => $this->t_d(['template' => 'edit'])]);
   }
 
   /**

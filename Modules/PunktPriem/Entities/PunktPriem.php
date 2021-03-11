@@ -13,6 +13,12 @@ class PunktPriem extends Model
     'address',
     'description',
     'has_contract',
+    'phone',
+    'coords',
+    'city_id',
+    'user_id',
+    'work_time',
+    'active',
   ];
 
   protected $table = "team_punkt_priem";

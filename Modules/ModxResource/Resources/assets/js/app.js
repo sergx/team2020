@@ -15,8 +15,8 @@ const app = new Vue({
     ajax_basic: function(DataToGo, url){
       return axios({
           method: 'post',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          //headers: { 'Content-Type': 'application/json' },
+          //headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          headers: { 'Content-Type': 'application/json' },
           url: url,
           data: DataToGo
         }

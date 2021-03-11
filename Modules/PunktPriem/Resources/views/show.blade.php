@@ -31,6 +31,7 @@
           <li>place — {{$item->place}}</li>
         @endif
       </ul>
+      <p>(в разработке) материалов — <a href="/fastedit/punktpriem_permission/{{$item->id}}">Редактировать список материалов</a></p>
     </div>
     @include('inc.model-contacts', ['data' => $item->PersonContacts, 'title' => 'Контакты', 'model' => 'PunktPriem', 'model_id' => $item->id, 'removable' => true])
     @include('inc.model-files',    ['data' => $item->Files, 'title' => 'Файлы', 'model' => 'PunktPriem', 'model_id' => $item->id, 'removable' => true])

@@ -1,11 +1,13 @@
 <template>
   <div class="resource_edit">
-    <h1 class="mb-3" v-if="$route.name == 'FastEditUserPermission'">Редактирование доступа к редактированию цен для <a :href="'/user/'+$route.params.user_id" target="_blank">пользователя</a></h1>
-    <h1 class="mb-3" v-if="$route.name == 'FastEdit'">Редактирование контактных данных и цен</h1>
-    <div class="settings" v-if="$route.name == 'FastEditUserPermission' && cites_data.length">
+    <h1 class="mb-3" v-if="$route.name == 'FastEditUserPermission'">Редактирование доступа к редактированию цен для <a :href="'/user/'+$route.params.id" target="_blank">пользователя</a></h1>
+    <h1 class="mb-3" v-if="$route.name == 'FastEditPunktPriemPermission'">Укажите где отображать <a :href="'/punktpriem/'+$route.params.id" target="_blank">Партнера (пункт приема)</a></h1>
+    <h1 class="mb-3" v-if="$route.name == 'FastEditUserPrice'">Редактирование контактных данных и цен</h1>
+
+    <div class="settings" v-if="['FastEditUserPermission', 'FastEditPunktPriemPermission'].indexOf($route.name) != -1 && cites_data.length">
       <!-- <h2>Список городов</h2> -->
       <div class="city_list_wr">
-        <!--<div class="title" v-if="$route.name == 'FastEdit'"><label><input type="checkbox" @change="toggleAllCity"> <span>Все города</span></label></div>-->
+        <!--<div class="title" v-if="$route.name == 'FastEditUserPrice'"><label><input type="checkbox" @change="toggleAllCity"> <span>Все города</span></label></div>-->
         <div class="city_list">
           <checkbox-radio-item
             v-for="(city, index) in cites_data"
@@ -19,7 +21,7 @@
       </div>
       <!--<div class="stat_days"><input type="number" placeholder="Кол-во дней" v-model="stat_days"></div>-->
     </div>
-    <div v-else-if="$route.name == 'FastEditUserPermission' && !cites_data.length">
+    <div v-else-if="['FastEditUserPermission', 'FastEditPunktPriemPermission'].indexOf($route.name) != -1 && !cites_data.length">
       <button class="btn btn-primary" type="button" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         <span class="sr-only">Loading...</span>
@@ -42,7 +44,7 @@
       <!-- <h2 v-if="city_to_edit.id && $route.name == 'FastEditUserPermission'" class="mt-4">{{city_to_edit.menutitle}} — Материалы в городе</h2> -->
       <h2 class="mt-4 mb-3" v-if="city_to_edit.id">{{city_to_edit.menutitle}} — материалы в городе</h2>
       <button @click="userPermissionUpdate"
-        v-if="city_to_edit.id && $route.name == 'FastEditUserPermission'"
+        v-if="city_to_edit.id && ['FastEditUserPermission', 'FastEditPunktPriemPermission'].indexOf($route.name) != -1"
         class="btn btn-outline-primary btn-sm mb-3">
         Сохранить набор материалов ({{materials_selected.length}} шт.)
         <span v-if="ui.userPermissionUpdate_isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -51,14 +53,14 @@
 
     <div class="table-responsive-lg" v-if="city_to_edit.id">
       <div class="table">
-        <div class="td_row thead" v-if="$route.name == 'FastEdit'">
+        <div class="td_row thead" v-if="$route.name == 'FastEditUserPrice'">
           <div class="td_material">Материал</div>
           <div class="td_price">Цена за 1 кг</div>
           <div class="td_phone">Телефон</div>
           <div class="td_email">Email</div>
           <!--<div class="td_stat">Статистика</div>-->
         </div>
-        <div class="td_row" v-if="$route.name == 'FastEdit'">
+        <div class="td_row" v-if="$route.name == 'FastEditUserPrice'">
           <div class="td_material"></div>
           <div class="td_price"></div>
           <div class="td_phone input-group">
@@ -91,13 +93,13 @@
 
       </div>
     </div>
-    <div v-else-if="$route.name == 'FastEdit' && !cites_data.length">
+    <div v-else-if="$route.name == 'FastEditUserPrice' && !cites_data.length">
       <button class="btn btn-primary" type="button" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         <span class="sr-only">Loading...</span>
       </button>
     </div>
-    <div v-if="$route.name == 'FastEdit' && cites_selected.length">
+    <div v-if="$route.name == 'FastEditUserPrice' && cites_selected.length">
       <hr>
       <h3>Изменить для всех доступных</h3>
       <p>Тут можно отредактировать телефон и почту сразу для всех доступных материалов во всех городах</p>
@@ -194,23 +196,23 @@
     },
     mounted(){
 
-      if(this.$route.name == "FastEditUserPermission"){
+      if(['FastEditUserPermission', 'FastEditPunktPriemPermission'].indexOf(this.$route.name) != -1){
         this.$root.ajax_basic({userPermissions: []}, this.url.materials_tree_list).then(response => {
           this.materials_tree_list = response.data.data;
-          return this.$root.ajax_basic({user_id:parseInt(this.$route.params.user_id)}, this.url.user_permission_get).then(response => {
+          return this.$root.ajax_basic({id:parseInt(this.$route.params.id), route_name: this.$route.name}, this.url.user_permission_get).then(response => {
             return this.getCityList().then(() => {
               this.userPermissionGet(response.data);
             });
           });
 
         });
-      }else if(this.$route.name == "FastEdit"){
-        this.loadData_FastEdit();
+      }else if(this.$route.name == "FastEditUserPrice"){
+        this.loadData_FastEditUserPrice();
       }
     },
     methods:{
-      loadData_FastEdit: function(){
-        return this.$root.ajax_basic({user_id:parseInt(this.$route.params.user_id)}, this.url.user_permission_get).then(response => {
+      loadData_FastEditUserPrice: function(){
+        return this.$root.ajax_basic({id:parseInt(this.$route.params.id), route_name: this.$route.name}, this.url.user_permission_get).then(response => {
           let userPermissions = response.data;
           if(!Object.keys(userPermissions).length){
            //return this.error_redirect();
@@ -279,7 +281,8 @@
         this.$root.ajax_basic({
           materials: this.materials_selected.map(material => material.id),
           city_id: this.city_to_edit.id,
-          user_id: parseInt(this.$route.params.user_id),
+          id: parseInt(this.$route.params.id),
+          route_name: this.$route.name,
           }, this.url.user_permission_update).then(response => {
             this.userPermissionGet(response.data);
             this.ui.userPermissionUpdate_isLoading = false;
@@ -308,7 +311,7 @@
           console.log(dataToSend);
           this.updateField(dataToSend).then(() => {
             if(--count === 0){
-              this.loadData_FastEdit().then(() => {
+              this.loadData_FastEditUserPrice().then(() => {
                 console.log("ok");
                 switch(type){
                   case "phone": this.ui.massUpdatePhone_isLoading = false; break;
@@ -318,8 +321,6 @@
             }
           });
         });
-
-
       },
       updateFieldSelected: function(val, type){
         //console.log(this.materials_selected.map(material => material.id));
@@ -330,7 +331,7 @@
           material_ids: this.materials_selected.map(material => material.id),
         }).then(() => {
 
-          // this.loadData_FastEdit().then(() => {
+          // this.loadData_FastEditUserPrice().then(() => {
           //   e.target.value = "";
           //   });
           });
@@ -339,7 +340,8 @@
         //console.log(data);
         return this.$root.ajax_basic(
           Object.assign(data, {
-            user_id: this.$route.params.user_id,
+            id: this.$route.params.id,
+            route_name: this.$route.name,
             }),
           this.url.update_field).then(response => {
             // Обработка ошибок!
@@ -384,13 +386,22 @@
       // }
     },
     watch:{
-      city_to_edit:function(val){
-        //console.log(val);
-        if(this.$route.name == "FastEditUserPermission"){
-          this.materials_selected = val.materials_selected;
-        }else{
-          this.materials_selected = [];
+      cites_selected:function(val){
+        if(val.length === 0){
+          this.city_to_edit = {};
         }
+      },
+      city_to_edit:function(val){
+        switch(this.$route.name){
+          case 'FastEditUserPermission':
+          case 'FastEditPunktPriemPermission':
+            this.materials_selected = val.materials_selected;
+          break;
+          case 'FastEditUserPrice':
+            this.materials_selected = [];
+          break;
+        }
+
       }
     }
   }

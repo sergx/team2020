@@ -8,6 +8,10 @@ class UserResourses extends Model
 {
   use \App\Traits\commonModelTrait;
 
+  // prefix:
+  // user        1000000
+  // punktpriem  2000000
+
   //protected $fillable = [];
   protected $guarded = [];
   protected $table = "team_user_resourses";
